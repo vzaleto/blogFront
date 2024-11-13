@@ -2,6 +2,7 @@ import {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../store/store.ts";
 import {fetchPosts} from "../../features/postSlise/postSlice.ts";
+import {Tag} from "../../Types/types.ts";
 
 const PostsGetAll = () => {
 
@@ -26,6 +27,12 @@ const PostsGetAll = () => {
                       <div>{elem.title}</div>
                       <div>{elem.content}</div>
                       <div>{elem.image}</div>
+                      {
+                          elem.tags && elem.tags.length ?
+                              elem.tags.map((tag:Tag)=>(
+                                  <div key={tag.id} >{tag.name}</div>
+                              )) :<p>"no tags"</p>
+                      }
                       <button type='button' > learn more </button>
                   </div>
               )) : <p>"no posts"</p>

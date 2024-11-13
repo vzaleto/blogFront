@@ -3,9 +3,14 @@ export interface Post{
     title: string,
     content: string,
     image: string,
-    tags: string[]
+    tags: Tag[]
     createdAt?: string
     updatedAt?: string
+}
+
+export interface Tag{
+    id?: number
+    name: string
 }
 export interface PostsState{
    posts: Post[],

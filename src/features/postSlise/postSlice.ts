@@ -14,8 +14,9 @@ export const fetchPosts = createAsyncThunk(
 //2create
 export const createPost = createAsyncThunk(
     'post/createPost',
-    async (newPost: Post) => {
+    async (newPost: Post, {dispatch}) => {
         const response = await apiClient.post('/postCreate', newPost)
+        await dispatch(fetchPosts())
         return response.data
     }
 )
@@ -46,9 +47,9 @@ const postSlice = createSlice({
                 state.posts = payload;
             })
             //3create
-            .addCase(createPost.fulfilled, (state, {payload}) => {
+            .addCase(createPost.fulfilled, (state) => {
                 state.status = 'succeeded'
-                state.posts.push(payload);
+                // state.posts.push(payload);
             })
 
             .addMatcher(

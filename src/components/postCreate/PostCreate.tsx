@@ -3,6 +3,7 @@ import {useDispatch} from "react-redux";
 import {AppDispatch} from "../../store/store.ts";
 import {FormEvent, useState} from "react";
 import {createPost} from "../../features/postSlise/postSlice.ts";
+import {Tag} from "../../Types/types.ts";
 
 const PostCreate = () => {
 
@@ -22,7 +23,9 @@ const handleSubmit = async (e: FormEvent)=>{
         content: inputContent,
         fullContent: inputFullContent,
         image: inputImage,
-        tags: inputTag.split(',').map((tag) => tag.trim())
+        tags: inputTag.split(',').map((tag) => ({
+            name: tag.trim()
+        })) as Tag[]
     }
     await dispatch(createPost(post)) //1createPost
 
