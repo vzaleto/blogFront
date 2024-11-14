@@ -16,7 +16,7 @@ const PostsGetAll = () => {
         }
     }, [ dispatch,status]);
 
-    console.log(posts)
+
 
     return (
       <div>
@@ -27,18 +27,28 @@ const PostsGetAll = () => {
                       <div>{elem.title}</div>
                       <div>{elem.content}</div>
                       <div>{elem.image}</div>
-                      {
-                          elem.tags && elem.tags.length ?
-                              elem.tags.map((tag:Tag)=>(
-                                  <div key={tag.id} >{tag.name}</div>
-                              )) :<p>"no tags"</p>
+                      <div>
+                          <h4 className='m-0' >Tags:</h4>
+                          {
+                              elem.tags && elem.tags.length ?
+
+                                  elem.tags.map((tag: Tag) => (
+
+
+                                          <div key={tag.id}>{tag.name}</div>
+
+                                  ))
+
+                                  : <p>"no tags"</p>
+
+                          }
+                      </div>
+                          <button type='button'> learn more</button>
+                      </div>
+                      )) : <p>"no posts"</p>
                       }
-                      <button type='button' > learn more </button>
                   </div>
-              )) : <p>"no posts"</p>
-          }
-      </div>
-    );
+              );
 };
 
 export default PostsGetAll;

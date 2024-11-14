@@ -27,6 +27,7 @@ const handleSubmit = async (e: FormEvent)=>{
             name: tag.trim()
         })) as Tag[]
     }
+    console.log(post)
     await dispatch(createPost(post)) //1createPost
 
     setInputImage('');
