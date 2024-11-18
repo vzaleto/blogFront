@@ -2,14 +2,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../store/store.ts";
 import {useEffect} from "react";
 import {fetchTags} from "../../features/tagSlice/tagSlice.ts";
-// import {fetchPostsByTagName} from "../../features/postSlise/postSlice.ts";
+import {Link} from "react-router-dom";
 
 const GetTags = () => {
 
 const {tags, status} = useSelector((state:RootState)=> state.tags);
 
 const dispatch:AppDispatch = useDispatch();
-console.log(tags)
 
     useEffect(() => {
         if(status === 'idle')
@@ -26,7 +25,7 @@ console.log(tags)
                 tags.length ?
                     tags.map((tag) => (
                         <div key={tag.id}>
-                            <button type='button'>{tag.name}</button>
+                            <Link to={`/tag/${tag.name}`}>{tag.name}</Link>
                         </div>
                     ))
                     :

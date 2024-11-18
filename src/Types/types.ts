@@ -13,10 +13,11 @@ export interface Tag{
     name: string
 }
 export interface PostsState{
-   posts: Post[],
+    posts: Post[],
     currentPost?: Post,
     status:'idle'| 'loading'|'succeeded'|'failed';
-    error: string|null
+    error: string|null,
+    isFiltered: boolean
 }
 // export interface Tag{
 //     name: string

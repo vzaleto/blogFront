@@ -35,20 +35,24 @@ export const fetchPostsByTagName = createAsyncThunk(
 
 
 const initialState: PostsState = {
-
     posts: [], //4create
     currentPost: undefined,
     status: 'idle',
     error: null,
+    isFiltered: false
 }
 
 const postSlice = createSlice({
     name: 'post',
     initialState,
     reducers: {
-        setCurrentPost(state, action: PayloadAction<Post | undefined>) {
-            state.currentPost = action.payload;
-
+        setFiltered(state, action: PayloadAction<boolean>) {
+            state.isFiltered = action.payload;
+        },
+        resetPosts(state) {
+            state.posts = []
+            state.status = 'idle'
+            state.isFiltered = false
         }
     },
     extraReducers: (builder) => {
@@ -57,6 +61,7 @@ const postSlice = createSlice({
             .addCase(fetchPosts.fulfilled, (state, {payload}) => {
                 state.status = 'succeeded'
                 state.posts = payload;
+                state.isFiltered = false
             })
             //3create
             .addCase(createPost.fulfilled, (state) => {
@@ -66,6 +71,7 @@ const postSlice = createSlice({
             .addCase(fetchPostsByTagName.fulfilled,(state,{payload})=>{
                 state.status = 'succeeded'
                 state.posts = payload
+                state.isFiltered = true
             })
 
             .addMatcher(
@@ -87,4 +93,6 @@ const postSlice = createSlice({
 
 })
 
+
+export  const {resetPosts, setFiltered} = postSlice.actions
 export default postSlice.reducer;

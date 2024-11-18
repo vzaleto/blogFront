@@ -1,14 +1,11 @@
 
-import PostCreate from "./components/postCreate/PostCreate.tsx";
-import PostsGetAll from "./components/postsGetAll/PostsGetAll.tsx";
-import GetTags from "./components/getTags/GetTags.tsx";
+
+import {Outlet} from "react-router-dom";
 
 const App = () => {
     return (
         <div>
-            <PostCreate />
-            <GetTags/>
-            <PostsGetAll/>
+           <Outlet/>
         </div>
     );
 };
