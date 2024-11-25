@@ -5,7 +5,7 @@ import {fetchTags} from "../tagSlice/tagSlice.ts";
 
 //2
 export const fetchPosts = createAsyncThunk(
-    'post/fetchPost',
+    'postCard/fetchPost',
     async () => {
         const response = await apiClient.get('/posts')
         return response.data
@@ -14,7 +14,7 @@ export const fetchPosts = createAsyncThunk(
 
 //2create
 export const createPost = createAsyncThunk(
-    'post/createPost',
+    'postCard/createPost',
     async (newPost: Post, {dispatch}) => {
         const response = await apiClient.post('/postCreate', newPost)
         await dispatch(fetchPosts())
@@ -24,7 +24,7 @@ export const createPost = createAsyncThunk(
 )
 
 export const fetchPostsByTagName = createAsyncThunk(
-    'post/fetchPostsByTagName',
+    'postCard/fetchPostsByTagName',
     async (tagName: string) => {
         const response = await apiClient.get(`/post/tag/${tagName}`)
 
@@ -33,13 +33,35 @@ export const fetchPostsByTagName = createAsyncThunk(
     }
 )
 
+export const fetchPostById = createAsyncThunk(
+    'postCard/fetchPostById',
+    async (id: number) => {
+        const response = await apiClient.get(`/post/${id}`)
+        return response.data
+    }
+)
+export const fetchPostsSearch = createAsyncThunk(
+    'postCard/fetchPostsSearch',
+    async (searchQuery: string, {rejectWithValue}) => {
+        try {
+            const response = await apiClient.get(`/post/search?query=${encodeURIComponent(searchQuery)}`)
+            console.log(response.data)
+            return response.data
+        } catch (error) {
+            console.log(error)
+            return rejectWithValue(error.response?.data || error.message)
+        }
+
+    }
+)
 
 const initialState: PostsState = {
     posts: [], //4create
     currentPost: undefined,
     status: 'idle',
     error: null,
-    isFiltered: false
+    isFiltered: false,
+
 }
 
 const postSlice = createSlice({
@@ -53,6 +75,16 @@ const postSlice = createSlice({
             state.posts = []
             state.status = 'idle'
             state.isFiltered = false
+        },
+        // getPostById(state, action:PayloadAction<number>){
+        //  state.status = 'succeeded';
+        //     state.currentPost = state.posts.find((post) => {
+        //             return   post.id === action.payload
+        //     }
+        //     )
+        // }
+        resetCurrentPost(state){
+            state.currentPost = undefined
         }
     },
     extraReducers: (builder) => {
@@ -73,16 +105,25 @@ const postSlice = createSlice({
                 state.posts = payload
                 state.isFiltered = true
             })
+            .addCase(fetchPostById.fulfilled, (state, {payload}) => {
+                state.status = 'succeeded'
+                state.currentPost = payload;
+            })
+            .addCase(fetchPostsSearch.fulfilled,(state,{payload})=>{
+                console.log(payload)
+                state.status = 'succeeded';
+                state.posts = payload;
+            })
 
             .addMatcher(
-                isAnyOf(fetchPosts.pending, createPost.pending, fetchPostsByTagName.pending),
+                isAnyOf(fetchPosts.pending, createPost.pending, fetchPostsByTagName.pending,fetchPostsSearch.pending),
                 (state) => {
                     state.status = 'loading';
                     state.error = null;
                 }
             )
             .addMatcher(
-                isAnyOf(fetchPosts.rejected, createPost.rejected, fetchPostsByTagName.rejected),
+                isAnyOf(fetchPosts.rejected, createPost.rejected, fetchPostsByTagName.rejected,fetchPostsSearch.rejected),
                 (state, {payload}) => {
                     state.status = 'failed';
                     state.error = (payload as string) || 'Something went wrong';
@@ -94,5 +135,5 @@ const postSlice = createSlice({
 })
 
 
-export  const {resetPosts, setFiltered} = postSlice.actions
+export  const {resetPosts, setFiltered, resetCurrentPost} = postSlice.actions
 export default postSlice.reducer;

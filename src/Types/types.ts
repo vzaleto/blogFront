@@ -3,7 +3,8 @@ export interface Post{
     title: string,
     content: string,
     image: string,
-    tags: Tag[]
+    tags: Tag[],
+    fullContent: {image: string, title: string, description: string}[],
     createdAt?: string
     updatedAt?: string
 }

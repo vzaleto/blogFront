@@ -20,12 +20,12 @@ const dispatch:AppDispatch = useDispatch();
 // }
 
     return (
-        <div>
+        <div className="flex-row flex mx-auto" >
             {
                 tags.length ?
                     tags.map((tag) => (
-                        <div key={tag.id}>
-                            <Link to={`/tag/${tag.name}`}>{tag.name}</Link>
+                        <div key={tag.id} className="block  before:absolute before:top-0 before:left-0 before:w-full before:h-0.5 before:bg-cyan-500 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-px after:bg-cyan-500 " >
+                            <Link to={`/tag/${tag.name}`} className="uppercase text-gray-600 block py-2.5 px-3.5 hover:bg-cyan-500 hover:text-white transition delay-35" >{tag.name}</Link>
                         </div>
                     ))
                     :

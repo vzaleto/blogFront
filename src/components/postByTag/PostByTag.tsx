@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../store/store.ts";
 import {useEffect} from "react";
 import {fetchPostsByTagName, resetPosts, setFiltered} from "../../features/postSlise/postSlice.ts";
-import {Tag} from "../../Types/types.ts";
+import PostCard from "../postCard/PostCard.tsx";
 
 
 const PostByTag = () => {
@@ -27,28 +27,7 @@ const PostByTag = () => {
             {
                 posts.length ? // 5
                     posts.map((elem)=>(
-                        <div key={elem.id}>
-                            <div>{elem.title}</div>
-                            <div>{elem.content}</div>
-                            <div>{elem.image}</div>
-                            <div>
-                                <h4 className='m-0' >Tags:</h4>
-                                {
-                                    elem.tags && elem.tags.length ?
-
-                                        elem.tags.map((tag: Tag) => (
-
-
-                                            <div key={tag.id}>{tag.name}</div>
-
-                                        ))
-
-                                        : <p>"no tags"</p>
-
-                                }
-                            </div>
-                            <button type='button'> learn more</button>
-                        </div>
+                        <PostCard key={elem.id} elem={elem} />
                     )) : <p>"no posts"</p>
             }
         </div>

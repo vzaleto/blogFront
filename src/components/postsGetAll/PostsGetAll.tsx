@@ -1,45 +1,43 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../store/store.ts";
-import {fetchPosts, resetPosts, setFiltered} from "../../features/postSlise/postSlice.ts";
-import {Tag} from "../../Types/types.ts";
+import {fetchPosts, fetchPostsSearch, resetPosts, setFiltered} from "../../features/postSlise/postSlice.ts";
 import GetTags from "../getTags/GetTags.tsx";
+import PostCard from "../postCard/PostCard.tsx";
+import {Link, useSearchParams} from 'react-router-dom';
 
 const PostsGetAll = () => {
 
     const {posts} = useSelector((state: RootState) => state.posts); // 4
     const dispatch: AppDispatch = useDispatch();
+    const [searchParams] = useSearchParams()
+    const searchQuery = searchParams.get('query')?.trim() || ''
     // const location = useLocation()
-
+    console.log(searchQuery)
     useEffect(() => {
-        dispatch(resetPosts())
-        dispatch(fetchPosts())//1
-        setFiltered(false)
-    }, [dispatch]); //location.pathname
+        console.log(searchQuery)
+        if (!searchQuery) {
+            console.log('no lox')
+            dispatch(resetPosts())
+            dispatch(fetchPosts())//1
+            dispatch(setFiltered(false))
+        } else {
+            console.log('lox')
+            dispatch(fetchPostsSearch(searchQuery))
+        }
+
+    }, [dispatch, searchQuery]); //location.pathname
 
     return (
         <div>
+            <Link to={`/postCreate`}>
+                <button>Create</button>
+            </Link>
             <GetTags/>
             {
-                posts.length ? // 5
+                posts && posts.length ? // 5
                     posts.map((elem) => (
-                        <div style={{border: '1px solid black '}} key={elem.id}>
-                            <span>{elem.id}</span>
-                            <div>{elem.title}</div>
-                            <div>{elem.content}</div>
-                            <div>{elem.image}</div>
-                            <div>
-                                <h4 className='m-0'>Tags:</h4>
-                                {
-                                    elem.tags && elem.tags.length ?
-                                        elem.tags.map((tag: Tag) => (
-                                            <div key={tag.id}>{tag.name}</div>
-                                        )) : <p>"no tags"</p>
-                                }
-                            </div>
-                            {/*<Link to={`/tag/${tag.name}`}>{tag.name}</Link>*/}
-                            {/*    <Link to={`/post/${elem.id}`} type='button'> learn more</Link>*/}
-                        </div>
+                        <PostCard key={elem.id} elem={elem}/>
                     )) : <p>"no posts"</p>
             }
         </div>
