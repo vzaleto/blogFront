@@ -1,10 +1,13 @@
-import {useDispatch} from "react-redux";
-import {AppDispatch} from "../../store/store.ts";
-import {FormEvent, useState} from "react";
-import {createPost} from "../../features/postSlise/postSlice.ts";
-import {Tag} from "../../Types/types.ts";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from "../../store/store.ts";
+import {FormEvent, useEffect, useState} from "react";
+import { Tag} from "../../Types/types.ts";
+import {useNavigate} from "react-router-dom";
 
 const PostCreate = () => {
+
+
+    const {token} = useSelector((state:RootState) => state.auth);
 
     const [inputTitle, setInputTitle] = useState<string>('');
     const [inputContent, setInputContent] = useState<string>('');
@@ -16,9 +19,15 @@ const PostCreate = () => {
         title: '',
         description: ''
     });
-
+    const navigate = useNavigate();
 
     const dispatch: AppDispatch = useDispatch();
+
+    useEffect(() => {
+        if (!token) {
+            navigate('/')
+        }
+    }, [token, navigate]);
 
     const addCard = (e: FormEvent) => {
         e.preventDefault()
@@ -38,7 +47,6 @@ const PostCreate = () => {
                 name: tag.trim()
             })) as Tag[]
         }
-        console.log(post)
         await dispatch(createPost(post)) //1createPost
 
         setInputImage('');

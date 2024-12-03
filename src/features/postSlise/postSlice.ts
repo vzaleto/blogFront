@@ -2,6 +2,8 @@ import {createAsyncThunk, createSlice, isAnyOf, PayloadAction} from "@reduxjs/to
 import {Post, PostsState} from "../../Types/types.ts";
 import apiClient from "../../api/postApi.ts";
 import {fetchTags} from "../tagSlice/tagSlice.ts";
+import {AxiosError} from "axios";
+
 
 //2
 export const fetchPosts = createAsyncThunk(
@@ -19,6 +21,7 @@ export const createPost = createAsyncThunk(
         const response = await apiClient.post('/postCreate', newPost)
         await dispatch(fetchPosts())
         await dispatch(fetchTags())
+
         return response.data
     }
 )
@@ -42,18 +45,22 @@ export const fetchPostById = createAsyncThunk(
 )
 export const fetchPostsSearch = createAsyncThunk(
     'postCard/fetchPostsSearch',
-    async (searchQuery: string, {rejectWithValue}) => {
+    async (searchQuery:string, { rejectWithValue }) => {
         try {
-            const response = await apiClient.get(`/post/search?query=${encodeURIComponent(searchQuery)}`)
-            console.log(response.data)
-            return response.data
+            console.log('Sending search query:', searchQuery);
+            const response = await apiClient.get(`/search?query=${encodeURIComponent(searchQuery)}`);
+            console.log('Response data:', response.data);
+            return response.data;
         } catch (error) {
-            console.log(error)
-            return rejectWithValue(error.response?.data || error.message)
+            console.error('Error in fetchPostsSearch:', error);
+            if(error instanceof AxiosError) {
+                return rejectWithValue(error.response?.data || error.message);
+            }
         }
-
     }
-)
+);
+
+
 
 const initialState: PostsState = {
     posts: [], //4create
@@ -61,6 +68,8 @@ const initialState: PostsState = {
     status: 'idle',
     error: null,
     isFiltered: false,
+    // token: JSON.parse(localStorage.getItem('tokenBlog') )  || null
+    // token: localStorage.getItem('token')
 
 }
 
@@ -114,6 +123,14 @@ const postSlice = createSlice({
                 state.status = 'succeeded';
                 state.posts = payload;
             })
+            // .addCase(adminLoginPassword.fulfilled,(state,{payload})=>{
+            //     state.status = 'succeeded';
+            //     state.token = payload;
+            //     localStorage.setItem('tokenBlog', JSON.stringify(payload))
+            // })
+            // .addCase(authAdminToken.fulfilled,(state)=>{
+            //     state.status = 'succeeded';
+            // })
 
             .addMatcher(
                 isAnyOf(fetchPosts.pending, createPost.pending, fetchPostsByTagName.pending,fetchPostsSearch.pending),

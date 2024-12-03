@@ -18,7 +18,7 @@ export interface PostsState{
     currentPost?: Post,
     status:'idle'| 'loading'|'succeeded'|'failed';
     error: string|null,
-    isFiltered: boolean
+    isFiltered: boolean,
 }
 // export interface Tag{
 //     name: string
