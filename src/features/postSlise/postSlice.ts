@@ -2,7 +2,8 @@ import {createAsyncThunk, createSlice, isAnyOf, PayloadAction} from "@reduxjs/to
 import {Post, PostsState} from "../../Types/types.ts";
 import apiClient from "../../api/postApi.ts";
 import {fetchTags} from "../tagSlice/tagSlice.ts";
-import {AxiosError} from "axios";
+import axios, {AxiosError} from "axios";
+import {store} from "../../store/store.ts";
 
 
 //2
@@ -17,8 +18,20 @@ export const fetchPosts = createAsyncThunk(
 //2create
 export const createPost = createAsyncThunk(
     'postCard/createPost',
-    async (newPost: Post, {dispatch}) => {
-        const response = await apiClient.post('/postCreate', newPost)
+    async (newPost: FormData, {dispatch}) => {
+        const token = store.getState().auth.token;
+        if (!token) {
+            throw new Error('Unauthorized');
+        }
+        const response = await axios.post('http://localhost:3000/api/postCreate', newPost,
+            {
+                headers:
+                {
+                    'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${token}`
+                }
+            })
+
         await dispatch(fetchPosts())
         await dispatch(fetchTags())
 
@@ -85,13 +98,7 @@ const postSlice = createSlice({
             state.status = 'idle'
             state.isFiltered = false
         },
-        // getPostById(state, action:PayloadAction<number>){
-        //  state.status = 'succeeded';
-        //     state.currentPost = state.posts.find((post) => {
-        //             return   post.id === action.payload
-        //     }
-        //     )
-        // }
+
         resetCurrentPost(state){
             state.currentPost = undefined
         }
@@ -123,14 +130,6 @@ const postSlice = createSlice({
                 state.status = 'succeeded';
                 state.posts = payload;
             })
-            // .addCase(adminLoginPassword.fulfilled,(state,{payload})=>{
-            //     state.status = 'succeeded';
-            //     state.token = payload;
-            //     localStorage.setItem('tokenBlog', JSON.stringify(payload))
-            // })
-            // .addCase(authAdminToken.fulfilled,(state)=>{
-            //     state.status = 'succeeded';
-            // })
 
             .addMatcher(
                 isAnyOf(fetchPosts.pending, createPost.pending, fetchPostsByTagName.pending,fetchPostsSearch.pending),

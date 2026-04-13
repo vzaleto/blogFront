@@ -20,9 +20,17 @@ const SearchBar = () => {
 
 
     return (
-        <form onSubmit={handleSearch} >
-            <input type="text" value={searchQuery} placeholder="search" onChange={(e)=>setSearchQuery(e.target.value) } />
-            <button type='submit' > search </button>
+        <form onSubmit={handleSearch} className="flex gap-2">
+            <input
+                type="text"
+                value={searchQuery}
+                placeholder="Search..."
+                onChange={(e)=>setSearchQuery(e.target.value)}
+                className="px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+            />
+            <button className="px-4 py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition">
+                Search
+            </button>
         </form>
     );
 };

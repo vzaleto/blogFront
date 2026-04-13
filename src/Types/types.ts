@@ -20,6 +20,8 @@ export interface PostsState{
     error: string|null,
     isFiltered: boolean,
 }
-// export interface Tag{
-//     name: string
-// }
+export interface AdmitToken {
+    token: string | null,
+    status: 'idle' | 'loading' | 'succeeded' | 'failed',
+    error: string | null
+}

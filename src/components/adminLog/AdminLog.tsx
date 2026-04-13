@@ -30,15 +30,17 @@ const AdminLog = () => {
 
 console.log(token);
     return (
-        <form onSubmit={handleSubmit} >
+        <form onSubmit={handleSubmit} className="flex gap-2 items-center" >
+
+                <input type='text' value={username}  placeholder="login" onChange={ (e)=> setUsername(e.target.value)}  className="px-3 py-1 rounded border"/>
+
             <label>
-                <input type='text' value={username} onChange={ (e)=> setUsername(e.target.value)}/>
+                <input type='text' value={password} placeholder="password" onChange={ (e)=> setPassword(e.target.value)} className="px-3 py-1 rounded border"/>
             </label>
-            <label>
-                <input type='text' value={password} onChange={ (e)=> setPassword(e.target.value)}/>
-            </label>
-                <button type='submit'>submit </button>
-            {status === 'failed' && <p>{error}</p>}
+                <button type='submit' className="px-3 py-1 bg-black text-white rounded hover:bg-gray-800">Login </button>
+            {status === 'failed' && (
+                <p className="text-red-500 text-sm">{error}</p>
+            )}
         </form>
     );
 };

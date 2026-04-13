@@ -10,7 +10,7 @@ import PostCreate from "./components/postCreate/PostCreate.tsx";
 import Home from "./pages/home/Home.tsx";
 import PostsGetAll from "./components/postsGetAll/PostsGetAll.tsx";
 import PostByPost from "./components/postByPost/PostByPost.tsx";
-import AdminLog from "./components/adminLog/adminLog.tsx";
+import AdminLog from "./components/adminLog/AdminLog.tsx";
 
 const router = createBrowserRouter([
     {

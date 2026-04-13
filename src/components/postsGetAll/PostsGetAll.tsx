@@ -13,17 +13,16 @@ const PostsGetAll = () => {
     const [searchParams] = useSearchParams()
     const searchQuery = searchParams.get('query')?.trim() || ''
     const {token} = useSelector((state:RootState)=>state.auth)
-    // const location = useLocation()
-    console.log(searchQuery)
+
     useEffect(() => {
-        console.log(searchQuery)
+
         if (!searchQuery) {
-            console.log('no lox')
+
             dispatch(resetPosts())
             dispatch(fetchPosts())//1
             dispatch(setFiltered(false))
         } else {
-            console.log('lox')
+
             dispatch(fetchPostsSearch(searchQuery))
         }
 

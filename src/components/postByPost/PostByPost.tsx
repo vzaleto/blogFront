@@ -24,15 +24,17 @@ const PostByPost = () => {
         <div>
             {
                 currentPost ?
-                    <div>
-                        <div>{currentPost.title}</div>
-                        <div>{currentPost.content}</div>
-                        <img src={currentPost.image} alt=""/>
+                    <div className="bg-white rounded-2xl shadow-sm p-6">
+                        <span>{new Date(currentPost.createdAt || '').toLocaleDateString()}</span>
+                        <h2 className="text-3xl font-bold mb-4 ">{currentPost.title}</h2>
+                        <img src={`http://localhost:3000/uploads/${currentPost.image}`} alt="" className="w-40 h-28 object-cover rounded-xl mb-4"/>
+                        <div className="text-gray-700 mb-6">{currentPost.content}</div>
+
                         {currentPost.fullContent && currentPost.fullContent.map((item,  index) => (
-                            <div key={index}>
-                                <h3>{item.title}</h3>
-                                <img src={item.image} alt=""/>
-                                <p>{item.description}</p>
+                            <div key={index} className="mb-6">
+                                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
+                                <img src={`http://localhost:3000/uploads/${item.image}`} alt="" className="rounded mb-2"/>
+                                <p className="text-gray-600"> {item.description}</p>
                             </div>
                         ))}
                     </div>

@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import apiClient from "../../api/postApi.ts";
 import {AxiosError} from "axios";
+import {AdmitToken} from "../../Types/types.ts";
 
 export const adminLoginPassword = createAsyncThunk(
     'postCard/fetchLoginAdmin',
@@ -16,18 +17,8 @@ export const adminLoginPassword = createAsyncThunk(
         }
     }
 )
-// export const authAdminToken = createAsyncThunk(
-//     'postCard/fetchAdminToken',
-//     async (token)=>{
-//      const response = await apiClient.post(`/postCreate`, { 'Authorization': `Bearer ${token}` });
-//      return response.data
-//     }
-// )
-interface AdmitToken {
-    token: string | null,
-    status: 'idle' | 'loading' | 'succeeded' | 'failed',
-    error: string | null
-}
+
+
 
 const initialState: AdmitToken = {
     token: null,
