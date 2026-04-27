@@ -5,9 +5,10 @@ import adminSlice from "../features/adminSlice/adminSlice.ts";
 
 export const store = configureStore({
     reducer: {
+        auth: adminSlice,
         posts: postSlice,
         tags:tagSlice,
-        auth: adminSlice
+
     },
 });
 

@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../store/store.ts";
 import {FormEvent, useEffect, useState} from "react";
-import {Tag} from "../../Types/types.ts";
+
 import {useNavigate} from "react-router-dom";
 import {createPost} from "../../features/postSlise/postSlice.ts";
 
@@ -57,7 +57,7 @@ const PostCreate = () => {
         fullContent.forEach((elem) => {
             if (elem.image) {
                 console.log(elem.image)
-                formData.append('cardImage', elem.image)
+                formData.append('cardImage', elem.image);
             }
         });
 
@@ -78,53 +78,55 @@ const PostCreate = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div>
-                <label className="block font-semibold" htmlFor="title">Title: </label>
-                <input type='text' value={inputTitle} placeholder='Title' className="w-full p-2 border rounded"
+            <div className="mb-5">
+                {/*<label className="block font-normal mb-2 text-xl" htmlFor="title" >Title: </label>*/}
+                <input type='text' value={inputTitle} placeholder='Title' className="w-full p-2 border rounded text-lg"
                        id="title" onChange={(e) => setInputTitle(e.target.value)}/>
             </div>
-            <div>
-                <label className="block font-semibold" htmlFor="content">Content: </label>
-                <input type='text' value={inputContent} placeholder="Content" className="w-full p-2 border rounded"
+            <div className="mb-5">
+                {/*<label className="block font-normal mb-2 text-xl" htmlFor="content">Content: </label>*/}
+                <input type='text' value={inputContent} placeholder="Content" className="w-full p-2 border rounded text-lg"
                        id="content" onChange={(e) => setInputContent(e.target.value)}/>
             </div>
-            <div>
-                <label className="block font-semibold" htmlFor="image"> Image: </label>
-                <input type='file' placeholder="Image URL" className="w-1/2 p-2 border rounded" id="image"
-                       onChange={(e) => setInputImage(e.target.files?.[0] || null)}/>
-                {
-                    inputImage && (
-                        <img src={URL.createObjectURL(inputImage)} className="w-40 h-28 object-cover rounded-lg"/>
-                    )
-
-                }
-
+            <div className="mb-5">
+                {/*<label className="block font-normal mb-2 text-xl" htmlFor="image"> Image: </label>*/}
+                <div className="flex flex-row gap-2">
+                    <input type='file' className="" id="image"
+                           onChange={(e) => setInputImage(e.target.files?.[0] || null)}/>
+                    {
+                        inputImage && (
+                            <img src={URL.createObjectURL(inputImage)} className="w-40 h-28 object-cover rounded-lg"/>
+                        )
+                    }
+                </div>
             </div>
-            <div>
-                <label className="block font-semibold" htmlFor="tag">Tags (comma separated): </label>
-                <input type='text' value={inputTag} placeholder="Tags" id="tag" className="w-full p-2 border rounded"
+            <div className="mb-5">
+                {/*<label className="block font-normal mb-2 text-xl" htmlFor="tag">Tags (comma separated): </label>*/}
+                <input type='text' value={inputTag} placeholder="Tags (comma separated)" id="tag" className="w-full p-2 border rounded text-lg"
                        onChange={(e) => setInputTag(e.target.value)}/>
             </div>
             <div className="m-4 rounded shadow-lg p-4">
-                <h3>Full</h3>
-                <div>
-                    <label className="block font-semibold" htmlFor="cardImage">Card Image</label>
-                    <input type="file" placeholder="Image" className="w-full p-2 border rounded"
-                           onChange={(e) => setNewCard({...newCard, image: e.target.files?.[0] || null})} name=""
-                           id="cardImage"/>
-                    {newCard.image && (
-                        <img src={URL.createObjectURL(newCard.image)} className="w-40 h-28 object-cover rounded-lg"/>
-                    )}
+                <h3 className="text-lg mb-2">Full content</h3>
+                <div className="mb-5">
+                    {/*<label className="block font-normal mb-2 text-xl" htmlFor="cardImage">Card Image</label>*/}
+                    <div className="flex flex-row gap-2">
+                        <input type="file" className=""
+                               onChange={(e) => setNewCard({...newCard, image: e.target.files?.[0] || null})} name=""
+                               id="cardImage"/>
+                        {newCard.image && (
+                            <img src={URL.createObjectURL(newCard.image)} className="w-40 h-28 object-cover rounded-lg"/>
+                        )}
+                    </div>
                 </div>
-                <div>
-                    <label className="block font-semibold" htmlFor="cardTitle">Card title</label>
-                    <input type="text" value={newCard.title} placeholder="Title" className="w-full p-2 border rounded"
+                <div className="mb-5">
+                    {/*<label className="block font-normal mb-2 text-xl" htmlFor="cardTitle">Card title</label>*/}
+                    <input type="text" value={newCard.title} placeholder="Title" className="w-full p-2 border rounded text-lg"
                            onChange={(e) => setNewCard({...newCard, title: e.target.value})} name="" id="cardTitle"/>
                 </div>
-                <div>
-                    <label className="block font-semibold" htmlFor="cardDescription">Card description</label>
-                    <input type="text" value={newCard.description} placeholder="Title"
-                           className="w-full p-2 border rounded"
+                <div className="mb-5">
+                    {/*<label className="block font-normal mb-2 text-xl" htmlFor="cardDescription">Card description</label>*/}
+                    <input type="text" value={newCard.description} placeholder="Description"
+                           className="w-full p-2 border rounded text-lg"
                            onChange={(e) => setNewCard({...newCard, description: e.target.value})} name="" id=""/>
                 </div>
                 <button type="button" className="w-full py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 mt-4"

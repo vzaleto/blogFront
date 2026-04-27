@@ -20,23 +20,47 @@ const PostByPost = () => {
 
     }, [dispatch, id]);
 
+    const text = currentPost?.content.trim();
+    const first = text?.charAt(0);
+    const rest = text?.slice(1);
+
     return (
         <div>
             {
                 currentPost ?
-                    <div className="bg-white rounded-2xl shadow-sm p-6">
-                        <span>{new Date(currentPost.createdAt || '').toLocaleDateString()}</span>
-                        <h2 className="text-3xl font-bold mb-4 ">{currentPost.title}</h2>
-                        <img src={`http://localhost:3000/uploads/${currentPost.image}`} alt="" className="w-40 h-28 object-cover rounded-xl mb-4"/>
-                        <div className="text-gray-700 mb-6">{currentPost.content}</div>
 
-                        {currentPost.fullContent && currentPost.fullContent.map((item,  index) => (
-                            <div key={index} className="mb-6">
-                                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                                <img src={`http://localhost:3000/uploads/${item.image}`} alt="" className="rounded mb-2"/>
-                                <p className="text-gray-600"> {item.description}</p>
-                            </div>
-                        ))}
+                    <div className=" rounded-2xl shadow-sm p-6">
+                        <span className="text-lg">{new Date(currentPost.createdAt || '').toLocaleDateString()}</span>
+                        <h2 className="text-3xl font-semibold mb-6 mt-4">{currentPost.title}</h2>
+                        <img src={`http://localhost:3000/uploads/${currentPost.image}`} alt=""
+                             className="w-full block object-cover rounded-xl mb-4"/>
+                        <p className="text-gray-700 mb-6 mt-6">
+                            <span className="float-left mr-3 text-7xl">{first}</span>
+                            <span>{rest}</span>
+                        </p>
+
+                        {
+                            currentPost.fullContent && currentPost.fullContent.map((item, index) => {
+
+                                    const text = item?.description.trim();
+                                    const first = text?.charAt(0);
+                                    const rest = text?.slice(1);
+
+                                    return (
+                                        <div key={index} className="mb-6">
+                                            <h3 className="text-2xl font-semibold mb-6 mt-4">{item.title}</h3>
+
+                                            <img src={`http://localhost:3000/uploads/${item.image}`} alt=""
+                                                 className=" w-full h-96 object-cover block rounded-xl mb-4"/>
+                                            <p className="text-gray-600">
+                                                <span className="float-left mr-3 text-7xl">{first}</span>
+                                                <span>{rest}</span>
+                                            </p>
+                                        </div>
+                                    )
+                                }
+                            )
+                        }
                     </div>
                     : <p> "no post" </p>
             }

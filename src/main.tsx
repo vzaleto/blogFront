@@ -4,13 +4,14 @@ import './index.css'
 import App from './App.tsx'
 import {Provider} from "react-redux";
 import {store} from "./store/store.ts";
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
 import PostByTag from "./components/postByTag/PostByTag.tsx";
 import PostCreate from "./components/postCreate/PostCreate.tsx";
 import Home from "./pages/home/Home.tsx";
 import PostsGetAll from "./components/postsGetAll/PostsGetAll.tsx";
 import PostByPost from "./components/postByPost/PostByPost.tsx";
 import AdminLog from "./components/adminLog/AdminLog.tsx";
+import PrivateRoute from "./components/privateRoute/PrivateRoute.tsx";
 
 const router = createBrowserRouter([
     {
@@ -18,41 +19,43 @@ const router = createBrowserRouter([
         path: "/",
         element: <App/>,
 
-    children: [
-    {
-        path: '/',
-        element: <Home/>,
         children: [
+            {
+                path: '/',
+                element: <Home/>,
+                children: [
 
-            {
-                path: "/",
-                element: <PostsGetAll/>
-            },
-            {
-                path: "tag/:tagName",
-                element: <PostByTag/>
-            },
-            {
-                path: "/postCreate",
-                element: <PostCreate/>
-            },
-            {
-                path: "/post/:id",
-                element: <PostByPost/>
-            },
-            {
-                path: "/post/search",
-                element: <PostsGetAll/>
-            },
-            {
-                path:"/admin/login",
-                element:<AdminLog/>
+                    {
+                        path: "/",
+                        element: <PostsGetAll/>
+                    },
+                    {
+                        path: "tag/:tagName",
+                        element: <PostByTag/>
+                    },
+                    {
+                        path: "/postCreate",
+                        element: (<PrivateRoute>
+                            <PostCreate/>
+                        </PrivateRoute>)
+                    },
+                    {
+                        path: "/post/:id",
+                        element: <PostByPost/>
+                    },
+                    {
+                        path: "/post/search",
+                        element: <PostsGetAll/>
+                    },
+                    {
+                        path: "/admin/login",
+                        element: <AdminLog/>
+                    }
+
+                ]
             }
-
         ]
     }
-]
-}
 ])
 
 createRoot(document.getElementById('root')!).render(

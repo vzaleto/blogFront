@@ -11,8 +11,7 @@ const PostsGetAll = () => {
     const {posts} = useSelector((state: RootState) => state.posts); // 4
     const dispatch: AppDispatch = useDispatch();
     const [searchParams] = useSearchParams()
-    const searchQuery = searchParams.get('query')?.trim() || ''
-    const {token} = useSelector((state:RootState)=>state.auth)
+    const searchQuery = searchParams.get('query')?.trim() || '';
 
     useEffect(() => {
 
@@ -30,12 +29,6 @@ const PostsGetAll = () => {
 
     return (
         <div>
-            {token && (
-                <Link to={`/postCreate`}>
-                    <button>Create</button>
-                </Link>
-            )}
-
             <GetTags/>
             {
                 posts && posts.length ? // 5

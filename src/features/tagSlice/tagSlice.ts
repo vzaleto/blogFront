@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import apiClient from "../../api/postApi.ts";
+import { apiClient } from "../../api/postApi.ts";
 
 import {Tag} from "../../Types/types.ts";
 

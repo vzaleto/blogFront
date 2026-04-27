@@ -1,12 +1,12 @@
 import {createAsyncThunk, createSlice, isAnyOf, PayloadAction} from "@reduxjs/toolkit";
-import {Post, PostsState} from "../../Types/types.ts";
-import apiClient from "../../api/postApi.ts";
+import { PostsState} from "../../Types/types.ts";
+import {apiClient, apiClientCreatePost} from "../../api/postApi.ts";
 import {fetchTags} from "../tagSlice/tagSlice.ts";
-import axios, {AxiosError} from "axios";
-import {store} from "../../store/store.ts";
+import {AxiosError} from "axios";
 
 
-//2
+
+
 export const fetchPosts = createAsyncThunk(
     'postCard/fetchPost',
     async () => {
@@ -15,26 +15,13 @@ export const fetchPosts = createAsyncThunk(
     }
 )
 
-//2create
+
 export const createPost = createAsyncThunk(
     'postCard/createPost',
     async (newPost: FormData, {dispatch}) => {
-        const token = store.getState().auth.token;
-        if (!token) {
-            throw new Error('Unauthorized');
-        }
-        const response = await axios.post('http://localhost:3000/api/postCreate', newPost,
-            {
-                headers:
-                {
-                    'Content-Type': 'multipart/form-data',
-                Authorization: `Bearer ${token}`
-                }
-            })
-
+        const response = await apiClientCreatePost.post('/postCreate', newPost,)
         await dispatch(fetchPosts())
         await dispatch(fetchTags())
-
         return response.data
     }
 )
@@ -59,9 +46,13 @@ export const fetchPostById = createAsyncThunk(
 export const fetchPostsSearch = createAsyncThunk(
     'postCard/fetchPostsSearch',
     async (searchQuery:string, { rejectWithValue }) => {
+        console.log('Sending search query:', searchQuery);
+
         try {
-            console.log('Sending search query:', searchQuery);
-            const response = await apiClient.get(`/search?query=${encodeURIComponent(searchQuery)}`);
+            console.log('Sending search query try:', searchQuery);
+            const response = await apiClient.get(`/search`,{
+                params: { query: searchQuery }
+            });
             console.log('Response data:', response.data);
             return response.data;
         } catch (error) {
@@ -72,9 +63,6 @@ export const fetchPostsSearch = createAsyncThunk(
         }
     }
 );
-
-
-
 const initialState: PostsState = {
     posts: [], //4create
     currentPost: undefined,
@@ -105,13 +93,13 @@ const postSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            //3
+
             .addCase(fetchPosts.fulfilled, (state, {payload}) => {
                 state.status = 'succeeded'
                 state.posts = payload;
                 state.isFiltered = false
             })
-            //3create
+
             .addCase(createPost.fulfilled, (state) => {
                 state.status = 'succeeded'
                 // state.posts.push(payload);

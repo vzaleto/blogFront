@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import apiClient from "../../api/postApi.ts";
+import { apiClient } from "../../api/postApi.ts";
 import {AxiosError} from "axios";
 import {AdmitToken} from "../../Types/types.ts";
 
@@ -19,11 +19,11 @@ export const adminLoginPassword = createAsyncThunk(
 )
 
 
-
 const initialState: AdmitToken = {
     token: null,
     status: 'idle',
-    error: null
+    error: null,
+    isAuth: false
 }
 
 
@@ -32,7 +32,21 @@ const adminSlice = createSlice({
     initialState,
     reducers: {
         logout: (state) => {
-            state.token = null
+
+            state.token = null;
+            state.isAuth = false;
+            localStorage.removeItem('token');
+        },
+        setAuthTokenFromStorage: (state) => {
+
+            const token = localStorage.getItem('token') || null;
+            if (token) {
+                state.token = token
+                state.isAuth = true
+            }else {
+                state.token = null
+                state.isAuth = false
+            }
         }
     },
     extraReducers: (builder) => {
@@ -44,6 +58,8 @@ const adminSlice = createSlice({
             state.status = 'succeeded';
             state.token = payload;
             state.error = null;
+            state.isAuth = true;
+            localStorage.setItem('token', payload);
         })
         builder.addCase(adminLoginPassword.rejected, (state, {payload}) => {
             state.status = 'failed';
@@ -52,5 +68,5 @@ const adminSlice = createSlice({
     }
 })
 
-export const {logout} = adminSlice.actions
-export  default adminSlice.reducer
+export const {logout, setAuthTokenFromStorage} = adminSlice.actions
+export default adminSlice.reducer
