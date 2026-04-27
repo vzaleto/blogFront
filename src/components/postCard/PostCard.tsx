@@ -8,9 +8,6 @@ interface PostCardProps {
 
 const PostCard: FC<PostCardProps> = ({elem}) => {
     console.log(elem);
-    const text = elem.content.trim();
-    const first = text.charAt(0);
-    const rest = text.slice(1);
     return (
         <div key={elem.id}
              className="card relative border border-r-amber-950 border-b-amber-950 hover:shadow-lg transition p-6 mb-6 group ">

@@ -4,7 +4,7 @@ import {AppDispatch, RootState} from "../../store/store.ts";
 import {fetchPosts, fetchPostsSearch, resetPosts, setFiltered} from "../../features/postSlise/postSlice.ts";
 import GetTags from "../getTags/GetTags.tsx";
 import PostCard from "../postCard/PostCard.tsx";
-import {Link, useSearchParams} from 'react-router-dom';
+import {useSearchParams} from 'react-router-dom';
 
 const PostsGetAll = () => {
 

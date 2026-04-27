@@ -4,7 +4,7 @@ import './index.css'
 import App from './App.tsx'
 import {Provider} from "react-redux";
 import {store} from "./store/store.ts";
-import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import PostByTag from "./components/postByTag/PostByTag.tsx";
 import PostCreate from "./components/postCreate/PostCreate.tsx";
 import Home from "./pages/home/Home.tsx";
