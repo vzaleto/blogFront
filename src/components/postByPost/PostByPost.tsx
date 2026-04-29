@@ -32,7 +32,7 @@ const PostByPost = () => {
                     <div className=" rounded-2xl shadow-sm p-6">
                         <span className="text-lg">{new Date(currentPost.createdAt || '').toLocaleDateString()}</span>
                         <h2 className="text-3xl font-semibold mb-6 mt-4">{currentPost.title}</h2>
-                        <img src={`http://localhost:3000/uploads/${currentPost.image}`} alt=""
+                        <img src={`${import.meta.env.VITE_API_URL}/uploads/${currentPost.image}`} alt=""
                              className="w-full block object-cover rounded-xl mb-4"/>
                         <p className="text-gray-700 mb-6 mt-6">
                             <span className="float-left mr-3 text-7xl">{first}</span>
@@ -50,7 +50,7 @@ const PostByPost = () => {
                                         <div key={index} className="mb-6">
                                             <h3 className="text-2xl font-semibold mb-6 mt-4">{item.title}</h3>
 
-                                            <img src={`http://localhost:3000/uploads/${item.image}`} alt=""
+                                            <img src={`${import.meta.env.VITE_API_URL}/uploads/${item.image}`} alt=""
                                                  className=" w-full h-96 object-cover block rounded-xl mb-4"/>
                                             <p className="text-gray-600">
                                                 <span className="float-left mr-3 text-7xl">{first}</span>

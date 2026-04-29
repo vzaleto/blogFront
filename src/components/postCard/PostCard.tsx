@@ -17,7 +17,7 @@ const PostCard: FC<PostCardProps> = ({elem}) => {
                 <h2 className="mb-3 mt-3">{elem.title}</h2>
                 <div className="flex gap-3">
                     <div className="flex gap-1 border  border-amber-800  p-2 rounded-lg w-1/3">
-                        <img src={`http://localhost:3000/uploads/${elem.image}`} alt=""
+                        <img src={`${import.meta.env.VITE_API_URL}/uploads/${elem.image}`} alt=""
                              className="w-full h-28 object-cover rounded-lg  grayscale group-hover:grayscale-0"/>
                     </div>
                         <p className="item-post text-gray-600 text-lg line-clamp-4 mt-2 ml-4 w-2/3">{elem.content}</p>
