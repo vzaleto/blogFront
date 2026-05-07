@@ -63,6 +63,13 @@ export const fetchPostsSearch = createAsyncThunk(
         }
     }
 );
+export const fetchPostDelete = createAsyncThunk(
+    'postCard/fetchPostDelete',
+    async (id: number) => {
+        const response = await apiClient.delete(`/post/${id}`)
+        return response.data
+    }
+)
 const initialState: PostsState = {
     posts: [], //4create
     currentPost: undefined,
@@ -118,16 +125,19 @@ const postSlice = createSlice({
                 state.status = 'succeeded';
                 state.posts = payload;
             })
-
+            .addCase(fetchPostDelete.fulfilled,(state,{payload})=>{
+                state.status = 'succeeded';
+                state.posts = state.posts.filter((elem)=> elem.id !== Number(payload.id));
+            })
             .addMatcher(
-                isAnyOf(fetchPosts.pending, createPost.pending, fetchPostsByTagName.pending,fetchPostsSearch.pending),
+                isAnyOf(fetchPosts.pending, createPost.pending, fetchPostsByTagName.pending,fetchPostsSearch.pending,fetchPostDelete.pending),
                 (state) => {
                     state.status = 'loading';
                     state.error = null;
                 }
             )
             .addMatcher(
-                isAnyOf(fetchPosts.rejected, createPost.rejected, fetchPostsByTagName.rejected,fetchPostsSearch.rejected),
+                isAnyOf(fetchPosts.rejected, createPost.rejected, fetchPostsByTagName.rejected,fetchPostsSearch.rejected,fetchPostDelete.rejected),
                 (state, {payload}) => {
                     state.status = 'failed';
                     state.error = (payload as string) || 'Something went wrong';

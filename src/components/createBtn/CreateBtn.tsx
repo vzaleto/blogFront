@@ -7,7 +7,7 @@ export const CreateBtn = () => {
     return(
         <div>
             {isAuth && (
-                <Link to={`/postCreate`} className="px-3.5 py-1.5 text-base block border-amber-700 border-2 text-red-900  hover:border-rose-400 transition ">Create</Link>
+                <Link to={`/postCreate`} className="w-28 py-2 text-center rounded-3xl text-base block border-amber-700 border-2 text-red-900  hover:border-rose-400 transition ">Create</Link>
             )}
         </div>
     )

@@ -23,7 +23,7 @@ const AdminLog = () => {
     return (
         isAuth ? (
            <div>
-               <button onClick={() => dispatch(logout())} className="text-base px-4 py-2 bg-black text-white hover:bg-gray-800  " >logout</button>
+               <button onClick={() => dispatch(logout())} className="text-base block py-2.5 rounded-3xl w-28 bg-black text-white hover:bg-gray-800  text-center" >logout</button>
            </div>
         ):(
             <form onSubmit={handleSubmit} className="flex gap-2 items-center">

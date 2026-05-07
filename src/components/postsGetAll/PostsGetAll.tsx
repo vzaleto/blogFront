@@ -8,7 +8,7 @@ import {useSearchParams} from 'react-router-dom';
 
 const PostsGetAll = () => {
 
-    const {posts} = useSelector((state: RootState) => state.posts); // 4
+    const {posts} = useSelector((state: RootState) => state.posts);
     const dispatch: AppDispatch = useDispatch();
     const [searchParams] = useSearchParams()
     const searchQuery = searchParams.get('query')?.trim() || '';
@@ -18,7 +18,7 @@ const PostsGetAll = () => {
         if (!searchQuery) {
 
             dispatch(resetPosts())
-            dispatch(fetchPosts())//1
+            dispatch(fetchPosts())
             dispatch(setFiltered(false))
         } else {
 
@@ -27,11 +27,12 @@ const PostsGetAll = () => {
 
     }, [dispatch, searchQuery]); //location.pathname
 
+
     return (
         <div>
             <GetTags/>
             {
-                posts && posts.length ? // 5
+                posts && posts.length ?
                     posts.map((elem) => (
                         <PostCard key={elem.id} elem={elem}/>
                     )) : <p>"no posts"</p>

@@ -1,12 +1,17 @@
 import {FC} from 'react';
 import {Post, Tag} from "../../Types/types";
 import {Link} from "react-router-dom";
+import {PostDelete} from "../postDelete/PostDelete.tsx";
+import {useSelector} from "react-redux";
+import {RootState} from "../../store/store.ts";
 
 interface PostCardProps {
     elem: Post
 }
 
 const PostCard: FC<PostCardProps> = ({elem}) => {
+
+    const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     console.log(elem);
     return (
         <div key={elem.id}
@@ -20,7 +25,7 @@ const PostCard: FC<PostCardProps> = ({elem}) => {
                         <img src={`${import.meta.env.VITE_API_URL}/uploads/${elem.image}`} alt=""
                              className="w-full h-28 object-cover rounded-lg  grayscale group-hover:grayscale-0"/>
                     </div>
-                        <p className="item-post text-gray-600 text-lg line-clamp-4 mt-2 ml-4 w-2/3">{elem.content}</p>
+                    <p className="item-post text-gray-600 text-lg line-clamp-4 mt-2 ml-4 w-2/3">{elem.content}</p>
                 </div>
 
                 <div className="flex flex-wrap gap-2 mt-4">
@@ -32,9 +37,15 @@ const PostCard: FC<PostCardProps> = ({elem}) => {
                             )) : <p className="item-teg">"no tags"</p>
                     }
                 </div>
+                <div className="flex justify-between">
+                    <Link to={`/post/${elem.id}`} type='button'
+                          className="inline-block mt-4 text-red-700 font-medium text-sm"> learn more →</Link>
+                    {
+                        isAuth ? <PostDelete elemId={elem.id}/> : null
+                    }
 
-                <Link to={`/post/${elem.id}`} type='button'
-                      className="inline-block mt-4 text-red-700 font-medium text-sm"> learn more →</Link>
+                </div>
+
             </div>
         </div>
     )

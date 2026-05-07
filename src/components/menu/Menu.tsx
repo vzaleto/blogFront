@@ -1,14 +1,26 @@
 import {Link} from "react-router-dom";
 
-export const Menu = ()=>{
-    return(
+export const Menu = () => {
+    return (
         <div className='flex gap-4 menu-link'>
-            <Link to="" className="">sport </Link>
-            <Link to="" className="">technology</Link>
-            <Link to="" className="">food</Link>
-            <Link to="" className="">love</Link>
-            <Link to="" className="">sheet</Link>
-            <Link to="" className="">politics</Link>
+            <div className="btn-wrap">
+                <Link className="hover-cut" data-text="sport" to="">sport </Link>
+            </div>
+            <div className="btn-wrap">
+                <Link className="hover-cut" data-text="technology" to="">technology</Link>
+            </div>
+            <div className="btn-wrap">
+                <Link className="hover-cut" data-text="food" to="">food</Link>
+            </div>
+            <div className="btn-wrap">
+                <Link className="hover-cut" data-text="love" to="">love</Link>
+            </div>
+            <div className="btn-wrap">
+                <Link className="hover-cut" data-text="sheet" to="">sheet</Link>
+            </div>
+            <div className="btn-wrap">
+                <Link className="hover-cut" data-text="politics" to="">politics</Link>
+            </div>
         </div>
     )
 }

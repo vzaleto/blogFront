@@ -129,7 +129,7 @@ const PostCreate = () => {
                            className="w-full p-2 border rounded text-lg"
                            onChange={(e) => setNewCard({...newCard, description: e.target.value})} name="" id=""/>
                 </div>
-                <button type="button" className="w-full py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 mt-4"
+                <button type="button" className="w-full py-2 text-lg  bg-black text-white rounded-lg hover:bg-stone-700"
                         onClick={addCard}>Add card
                 </button>
             </div>
@@ -145,7 +145,7 @@ const PostCreate = () => {
                 </div>
             ))}
             <div>
-                <button type="submit" className="w-full py-2 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600">Create
+                <button type="submit" className="w-full py-2 text-lg bg-black text-white rounded-lg hover:bg-stone-700">Create
                     Post
                 </button>
             </div>

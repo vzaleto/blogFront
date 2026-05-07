@@ -53,32 +53,23 @@ h1, h2, h3 {
     font-size: 18px;
     text-transform: uppercase;
 }
-
 .container {
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
 }
-
 label {
     display: block;
     margin: 8px 0;
 }
-
 header {
     background: #f7f6f2;
 }
-
 header .title a {
     font-family: 'Offenbacher', serif;
     font-weight: 400;
     font-size: 65px;
 }
-
-.menu-link a {
-    font-family: 'Offenbacher', serif;
-}
-
 header:before{
     content: "";
     position: absolute;
@@ -119,19 +110,14 @@ header:before{
 /*    line-height: 1;*/
 /*}*/
 
-.menu-link a {
-    display: block;
-    font-size: 18px;
-    font-weight: 400;
-    padding: 14px 16px;
-    letter-spacing: 2px;
-    border: 1px solid transparent;
-}
+/*.menu-link a {*/
+/*    display: block;*/
+/*    font-size: 18px;*/
+/*    font-weight: 400;*/
+/*    padding: 14px 16px;*/
+/*    letter-spacing: 2px;*/
+/*}*/
 
-.menu-link a:hover {
-    border: 1px solid #5e5e5e;
-    transition: 0.3s;
-}
 
 /* ================ input[type="file"] ==============*/
 input[type="file"] {
@@ -185,10 +171,7 @@ input[type="file"]::after {
     content: "";
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230964B0'%3E%3Cpath d='M18 15v3H6v-3H4v3c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h-2zM7 9l1.41 1.41L11 7.83V16h2V7.83l2.59 2.58L17 9l-5-5-5 5z'/%3E%3C/svg%3E");
 }
-
 /* ------- From Step 1 ------- */
-
-
 input[type="file"]::file-selector-button {
     border-radius: 4px;
     padding: 0 16px;
@@ -200,13 +183,67 @@ input[type="file"]::file-selector-button {
     margin-right: 16px;
     transition: background-color 200ms;
 }
-
 input[type="file"]::file-selector-button:hover {
     background-color: #f3f4f6;
 }
-
 input[type="file"]::file-selector-button:active {
     background-color: #e5e7eb;
 }
+/*================= menu ===============*/
 
-/**/
+.menu-link a {
+    font-family: 'Offenbacher', serif;
+    display: block;
+    font-size: 24px;
+}
+.btn-wrap{
+    padding: 10px 15px;
+}
+.hover-cut {
+    color: #333;
+    position: relative;
+    width: max-content;
+    margin: 0 auto;
+    transform: skewX(0deg) translateX(0px);
+    cursor: pointer;
+    transition: 0.3s;
+}
+.hover-cut:hover {
+    /*transform: skewX(-15deg) translateX(18px);*/
+    color: #000;
+}
+.hover-cut::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 1px;
+    width: 0;
+    background: #fff;
+    overflow: hidden;
+    transition: 0.3s;
+    z-index: 1;
+    transform: rotate(5deg);
+}
+/*.hover-cut:hover::before {*/
+/*    width: 110%;*/
+/*    left: -5%;*/
+/*}*/
+.hover-cut::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0%;
+    top: 0;
+    height: 50%;
+    overflow: hidden;
+    transform: skewX(0deg);
+    background: #f7f6f2;
+    width: 110%;
+    transition: 0.3s;
+    color: #333;
+}
+.hover-cut:hover::after {
+    /*transform: skewX(25deg) translateX(-15px);*/
+    color: red;
+}
