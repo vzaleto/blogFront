@@ -19,7 +19,7 @@ export const fetchPosts = createAsyncThunk(
 export const createPost = createAsyncThunk(
     'postCard/createPost',
     async (newPost: FormData, {dispatch}) => {
-        const response = await apiClientCreatePost.post('/postCreate', newPost,)
+        const response = await apiClientCreatePost.post('/postCreate', newPost)
         await dispatch(fetchPosts())
         await dispatch(fetchTags())
         return response.data

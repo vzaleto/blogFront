@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosHeaders} from "axios";
  // const API_URL = 'http://localhost:3000/api';
      const API_URL = `${import.meta.env.VITE_API_URL}/api`;
 
@@ -13,11 +13,22 @@ export const apiClient = axios.create({
 });
 export const apiClientCreatePost = axios.create({
     baseURL: `${API_URL}`,
-    headers: {
-        "Content-type": "multipart/form-data",
-        Authorization: `Bearer ${localStorage.getItem("token")}`
-    }
+    // headers: {
+    //     "Content-type": "multipart/form-data",
+    //     Authorization: `Bearer ${localStorage.getItem("token")}`
+    // }
 })
+apiClientCreatePost.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        if (!config.headers) {
+           config.headers = new AxiosHeaders();
+       }
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+
 // apiClient.interceptors.request.use((config) => {
 //
 //     const token = localStorage.getItem("token");

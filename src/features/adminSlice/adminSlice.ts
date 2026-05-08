@@ -18,7 +18,6 @@ export const adminLoginPassword = createAsyncThunk(
     }
 )
 
-
 const initialState: AdmitToken = {
     token: null,
     status: 'idle',
@@ -26,13 +25,11 @@ const initialState: AdmitToken = {
     isAuth: false
 }
 
-
 const adminSlice = createSlice({
     name: 'admin',
     initialState,
     reducers: {
         logout: (state) => {
-
             state.token = null;
             state.isAuth = false;
             localStorage.removeItem('token');
