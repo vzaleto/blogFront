@@ -6,12 +6,13 @@ import {Provider} from "react-redux";
 import {store} from "./store/store.ts";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import PostByTag from "./components/postByTag/PostByTag.tsx";
-import PostCreate from "./components/postCreate/PostCreate.tsx";
 import Home from "./pages/home/Home.tsx";
 import PostsGetAll from "./components/postsGetAll/PostsGetAll.tsx";
 import PostByPost from "./components/postByPost/PostByPost.tsx";
 import AdminLog from "./components/adminLog/AdminLog.tsx";
 import PrivateRoute from "./components/privateRoute/PrivateRoute.tsx";
+import {CreatePostPage} from "./pages/createPost/CreatePostPage.tsx";
+import {EditPostPage} from "./pages/editPost/EditPostPage.tsx";
 
 const router = createBrowserRouter([
     {
@@ -36,7 +37,13 @@ const router = createBrowserRouter([
                     {
                         path: "/postCreate",
                         element: (<PrivateRoute>
-                            <PostCreate/>
+                            <CreatePostPage/>
+                        </PrivateRoute>)
+                    },
+                    {
+                        path: "/postEdit/:id",
+                        element: (<PrivateRoute>
+                            <EditPostPage/>
                         </PrivateRoute>)
                     },
                     {

@@ -70,6 +70,13 @@ export const fetchPostDelete = createAsyncThunk(
         return response.data
     }
 )
+export const fetchPostUpdate = createAsyncThunk(
+    'postSlice/fetchPostUpdate',
+    async ({id, formData}: {id: number, formData: FormData}) =>{
+        const response = await apiClientCreatePost.patch(`/postEdit/${id}`, formData)
+        return response.data
+    }
+)
 const initialState: PostsState = {
     posts: [], //4create
     currentPost: undefined,
@@ -100,7 +107,7 @@ const postSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-
+            //fetchPosts
             .addCase(fetchPosts.fulfilled, (state, {payload}) => {
                 state.status = 'succeeded'
                 state.posts = payload;
@@ -119,6 +126,7 @@ const postSlice = createSlice({
             .addCase(fetchPostById.fulfilled, (state, {payload}) => {
                 state.status = 'succeeded'
                 state.currentPost = payload;
+                console.log( state.currentPost)
             })
             .addCase(fetchPostsSearch.fulfilled,(state,{payload})=>{
                 console.log(payload)
@@ -129,25 +137,26 @@ const postSlice = createSlice({
                 state.status = 'succeeded';
                 state.posts = state.posts.filter((elem)=> elem.id !== Number(payload.id));
             })
+            .addCase(fetchPostUpdate.fulfilled,(state,{payload})=>{
+                state.status = 'succeeded';
+                state.posts = payload;
+            })
             .addMatcher(
-                isAnyOf(fetchPosts.pending, createPost.pending, fetchPostsByTagName.pending,fetchPostsSearch.pending,fetchPostDelete.pending),
+                isAnyOf(fetchPosts.pending, createPost.pending, fetchPostsByTagName.pending,fetchPostsSearch.pending,fetchPostDelete.pending,fetchPostUpdate.pending),
                 (state) => {
                     state.status = 'loading';
                     state.error = null;
                 }
             )
             .addMatcher(
-                isAnyOf(fetchPosts.rejected, createPost.rejected, fetchPostsByTagName.rejected,fetchPostsSearch.rejected,fetchPostDelete.rejected),
+                isAnyOf(fetchPosts.rejected, createPost.rejected, fetchPostsByTagName.rejected,fetchPostsSearch.rejected,fetchPostDelete.rejected,fetchPostUpdate.rejected),
                 (state, {payload}) => {
                     state.status = 'failed';
                     state.error = (payload as string) || 'Something went wrong';
                 }
             )
     }
-
-
 })
-
 
 export  const {resetPosts, setFiltered, resetCurrentPost} = postSlice.actions
 export default postSlice.reducer;

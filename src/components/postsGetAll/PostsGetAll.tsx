@@ -21,11 +21,10 @@ const PostsGetAll = () => {
             dispatch(fetchPosts())
             dispatch(setFiltered(false))
         } else {
-
             dispatch(fetchPostsSearch(searchQuery))
         }
 
-    }, [dispatch, searchQuery]); //location.pathname
+    }, [dispatch, searchQuery]);
 
 
     return (

@@ -3,6 +3,7 @@ export interface Post{
     title: string,
     content: string,
     image: string,
+    categoryId: number,
     tags: Tag[],
     fullContent: {image: string, title: string, description: string}[],
     createdAt?: string
@@ -25,4 +26,9 @@ export interface AdmitToken {
     status: 'idle' | 'loading' | 'succeeded' | 'failed',
     error: string | null,
     isAuth: boolean
+}
+export interface Category {
+    name: string;
+    slug: string;
+    description: string;
 }

@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {PostDelete} from "../postDelete/PostDelete.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "../../store/store.ts";
+import {ButtonEdit} from "../ButtonEdit/ButtonEdit.tsx";
 
 interface PostCardProps {
     elem: Post
@@ -37,11 +38,19 @@ const PostCard: FC<PostCardProps> = ({elem}) => {
                             )) : <p className="item-teg">"no tags"</p>
                     }
                 </div>
-                <div className="flex justify-between">
+                <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <Link to={`/post/${elem.id}`} type='button'
-                          className="inline-block mt-4 text-red-700 font-medium text-sm"> learn more →</Link>
+                          className="inline-block text-sm font-bold uppercase tracking-wide text-red-700 transition hover:text-amber-900">Learn more →</Link>
+
+
                     {
-                        isAuth ? <PostDelete elemId={elem.id}/> : null
+
+                        isAuth && elem.id ? (
+                            <div className="flex flex-wrap gap-2">
+                                <PostDelete elemId={elem.id}/>
+                                <ButtonEdit id={elem.id}/>
+                            </div>
+                        ) : null
                     }
 
                 </div>
