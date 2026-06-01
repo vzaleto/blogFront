@@ -46,17 +46,6 @@ const PostCreate = ({initialData}: {initialData?: Post}) => {
         }
     }, [token, navigate]);
 
-    // const PrivateRoute = ({ children }) => {
-    //
-    //     const token = useSelector(...);
-    //
-    //     if (!token) {
-    //         return <Navigate to="/" replace />
-    //     }
-    //
-    //     return children;
-    // }
-
     useEffect(() => {
         if (initialData) {
             setSelectedCategory(initialData.categoryId);
@@ -111,10 +100,6 @@ const PostCreate = ({initialData}: {initialData?: Post}) => {
             description:elem.description,
             image:elem.image instanceof File ? "_NEW_IMAGE_" : elem.image
         }))));
-        // formData.append('fullContent', JSON.stringify(fullContent.map(({title, description}) => ({
-        //     title,
-        //     description
-        // }))));
 
         fullContent.forEach((elem) => {
             if (elem.image instanceof File) {
@@ -142,7 +127,6 @@ const PostCreate = ({initialData}: {initialData?: Post}) => {
 
         dispatch(resetSuccess())
     }
-
 
     const handleEditCard = (index: number) => {
         setNewCard(fullContent[index]);
