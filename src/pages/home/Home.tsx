@@ -36,7 +36,7 @@ const Home = () => {
             </main>
 
             <footer className="border-t py-6 text-center text-gray-500">
-                © 2026 The CHronomics
+               <span> ©</span>{new Date().getFullYear()} The CHronomics
             </footer>
 
         </div>

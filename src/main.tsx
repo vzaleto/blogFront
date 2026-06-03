@@ -13,6 +13,7 @@ import AdminLog from "./components/adminLog/AdminLog.tsx";
 import PrivateRoute from "./components/privateRoute/PrivateRoute.tsx";
 import {CreatePostPage} from "./pages/createPost/CreatePostPage.tsx";
 import {EditPostPage} from "./pages/editPost/EditPostPage.tsx";
+import {CategoryPage} from "./pages/categoryPage/CategoryPage.tsx";
 
 const router = createBrowserRouter([
     {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
                     {
                         path: "/",
                         element: <PostsGetAll/>
+                    },
+                    {
+                        path: "/category/:slug",
+                        element: <CategoryPage/>
                     },
                     {
                         path: "tag/:tagName",

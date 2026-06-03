@@ -4,22 +4,22 @@ export const Menu = () => {
     return (
         <div className='flex gap-4 menu-link'>
             <div className="btn-wrap">
-                <Link className="hover-cut" data-text="sport" to="">sports</Link>
+                <Link className="hover-cut" data-text="Sports" to="/category/sports">Sports</Link>
             </div>
             <div className="btn-wrap">
-                <Link className="hover-cut" data-text="science" to="">science</Link>
+                <Link className="hover-cut" data-text="Science" to="/category/science">Science</Link>
             </div>
             <div className="btn-wrap">
-                <Link className="hover-cut" data-text="food" to="">food</Link>
+                <Link className="hover-cut" data-text="Technology" to="/category/technology">Technology</Link>
             </div>
             <div className="btn-wrap">
-                <Link className="hover-cut" data-text="health" to="">health</Link>
+                <Link className="hover-cut" data-text="Health" to="/category/health">Health</Link>
             </div>
             <div className="btn-wrap">
-                <Link className="hover-cut" data-text="education" to="">education</Link>
+                <Link className="hover-cut" data-text="lifestyle" to="/category/lifestyle">lifestyle</Link>
             </div>
             <div className="btn-wrap">
-                <Link className="hover-cut" data-text="politics" to="">politics</Link>
+                <Link className="hover-cut" data-text="Politics" to="/category/politics">Politics</Link>
             </div>
         </div>
     )

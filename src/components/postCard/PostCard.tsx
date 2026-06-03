@@ -6,7 +6,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../store/store.ts";
 import {ButtonEdit} from "../ButtonEdit/ButtonEdit.tsx";
 
-interface PostCardProps {
+ export interface PostCardProps {
     elem: Post
 }
 

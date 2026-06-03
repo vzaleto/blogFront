@@ -4,9 +4,6 @@ import {apiClient, apiClientCreatePost} from "../../api/postApi.ts";
 import {fetchTags} from "../tagSlice/tagSlice.ts";
 import {AxiosError} from "axios";
 
-
-
-
 export const fetchPosts = createAsyncThunk(
     'postCard/fetchPost',
     async () => {
@@ -14,7 +11,6 @@ export const fetchPosts = createAsyncThunk(
         return response.data
     }
 )
-
 
 export const createPost = createAsyncThunk(
     'postCard/createPost',
@@ -43,6 +39,7 @@ export const fetchPostById = createAsyncThunk(
         return response.data
     }
 )
+
 export const fetchPostsSearch = createAsyncThunk(
     'postCard/fetchPostsSearch',
     async (searchQuery:string, { rejectWithValue }) => {
@@ -63,6 +60,7 @@ export const fetchPostsSearch = createAsyncThunk(
         }
     }
 );
+
 export const fetchPostDelete = createAsyncThunk(
     'postCard/fetchPostDelete',
     async (id: number) => {
@@ -70,6 +68,7 @@ export const fetchPostDelete = createAsyncThunk(
         return response.data
     }
 )
+
 export const fetchPostUpdate = createAsyncThunk(
     'postSlice/fetchPostUpdate',
     async ({id, formData}: {id: number, formData: FormData}) =>{
@@ -77,8 +76,16 @@ export const fetchPostUpdate = createAsyncThunk(
         return response.data
     }
 )
+
+export const fetchPostSlug = createAsyncThunk(
+    'postCard/fetchPostSlug',
+    async (slug: string) => {
+        const response = await apiClient.get(`/post/category/${slug}`)
+        return response.data
+    }
+)
 const initialState: PostsState = {
-    posts: [], //4create
+    posts: [],
     currentPost: undefined,
     status: 'idle',
     error: null,
@@ -133,6 +140,11 @@ const postSlice = createSlice({
                 state.status = 'succeeded';
                 state.posts = payload;
             })
+            .addCase(fetchPostSlug.fulfilled, (state, {payload}) => {
+                state.status = 'succeeded'
+                state.posts = payload;
+
+            })
             .addCase(fetchPostDelete.fulfilled,(state,{payload})=>{
                 state.status = 'succeeded';
                 state.posts = state.posts.filter((elem)=> elem.id !== Number(payload.id));
@@ -142,14 +154,14 @@ const postSlice = createSlice({
                 state.posts = payload;
             })
             .addMatcher(
-                isAnyOf(fetchPosts.pending, createPost.pending, fetchPostsByTagName.pending,fetchPostsSearch.pending,fetchPostDelete.pending,fetchPostUpdate.pending),
+                isAnyOf(fetchPosts.pending, createPost.pending, fetchPostsByTagName.pending,fetchPostsSearch.pending,fetchPostDelete.pending,fetchPostUpdate.pending,fetchPostSlug.pending),
                 (state) => {
                     state.status = 'loading';
                     state.error = null;
                 }
             )
             .addMatcher(
-                isAnyOf(fetchPosts.rejected, createPost.rejected, fetchPostsByTagName.rejected,fetchPostsSearch.rejected,fetchPostDelete.rejected,fetchPostUpdate.rejected),
+                isAnyOf(fetchPosts.rejected, createPost.rejected, fetchPostsByTagName.rejected,fetchPostsSearch.rejected,fetchPostDelete.rejected,fetchPostUpdate.rejected,fetchPostSlug.rejected),
                 (state, {payload}) => {
                     state.status = 'failed';
                     state.error = (payload as string) || 'Something went wrong';
