@@ -11,7 +11,7 @@ export const ButtonEdit = ({id}: {id: number})=>{
     return (
         <button
             type="button"
-            className="rounded-md border border-stone-300 bg-white px-4 py-2 text-sm font-bold uppercase tracking-wide text-stone-800 transition hover:border-amber-700 hover:text-amber-900 focus:outline-none focus:ring-2 focus:ring-amber-200"
+            className="border border-stone-900 bg-transparent px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-stone-950 transition hover:bg-stone-950 hover:text-[#f7f6f2] focus:outline-none focus:ring-1 focus:ring-stone-950"
             onClick={handleClick}
         >
             Edit

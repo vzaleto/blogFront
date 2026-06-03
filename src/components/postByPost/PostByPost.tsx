@@ -23,21 +23,36 @@ const PostByPost = () => {
     const text = currentPost?.content.trim();
     const first = text?.charAt(0);
     const rest = text?.slice(1);
+    const publishedDate = currentPost?.createdAt ? new Date(currentPost.createdAt).toLocaleDateString() : 'Undated';
 
     return (
-        <div>
+        <div className="article-shell">
             {
                 currentPost ?
 
-                    <div className=" rounded-2xl shadow-sm p-6">
-                        <span className="text-lg">{new Date(currentPost.createdAt || '').toLocaleDateString()}</span>
-                        <h2 className="text-3xl font-semibold mb-6 mt-4">{currentPost.title}</h2>
-                        <img src={`${import.meta.env.VITE_API_URL}/uploads/${currentPost.image}`} alt=""
-                             className="w-full block object-cover rounded-xl mb-4"/>
-                        <p className="text-gray-700 mb-6 mt-6">
-                            <span className="float-left mr-3 text-7xl">{first}</span>
-                            <span>{rest}</span>
-                        </p>
+                    <article className="pb-12">
+                        <header className="mx-auto max-w-4xl border-b border-stone-900/70 pb-8 text-center">
+                            <div className="mb-5 flex items-center justify-center gap-3 text-[0.72rem] font-bold uppercase tracking-[0.24em] text-stone-500">
+                                <span>Article</span>
+                                <span className="h-px w-8 bg-stone-400" aria-hidden="true"></span>
+                                <time dateTime={currentPost.createdAt}>{publishedDate}</time>
+                            </div>
+                            <h2 className="article-title mx-auto max-w-4xl text-5xl leading-none text-stone-950 md:text-7xl">
+                                {currentPost.title}
+                            </h2>
+                        </header>
+
+                        <figure className="mx-auto mt-8 max-w-5xl border-y border-stone-900/70 py-4">
+                            <img src={`${import.meta.env.VITE_API_URL}/uploads/${currentPost.image}`} alt={currentPost.title}
+                                 className="block h-[22rem] w-full object-cover grayscale md:h-[34rem]"/>
+                        </figure>
+
+                        <div className="article-body mx-auto mt-10 max-w-3xl">
+                            <p className="article-lede text-2xl leading-10 text-stone-800">
+                                <span className="article-dropcap">{first}</span>
+                                <span>{rest}</span>
+                            </p>
+                        </div>
 
                         {
                             currentPost.fullContent && currentPost.fullContent.map((item, index) => {
@@ -47,24 +62,24 @@ const PostByPost = () => {
                                     const rest = text?.slice(1);
 
                                     return (
-                                        <div key={index} className="mb-6">
-                                            <h3 className="text-2xl font-semibold mb-6 mt-4">{item.title}</h3>
+                                        <section key={index} className="article-section mx-auto mt-12 max-w-3xl border-t border-stone-300 pt-8">
+                                            <h3 className="mb-5 text-3xl leading-tight text-stone-950 md:text-4xl">{item.title}</h3>
 
-                                            <img src={`${import.meta.env.VITE_API_URL}/uploads/${item.image}`} alt=""
-                                                 className=" w-full h-96 object-cover block rounded-xl mb-4"/>
-                                            <p className="text-gray-600">
-                                                <span className="float-left mr-3 text-7xl">{first}</span>
+                                            <img src={`${import.meta.env.VITE_API_URL}/uploads/${item.image}`} alt={item.title}
+                                                 className="mb-7 block h-80 w-full object-cover grayscale md:h-96"/>
+                                            <p className="text-xl leading-9 text-stone-700">
+                                                <span className="article-section-dropcap">{first}</span>
                                                 <span>{rest}</span>
                                             </p>
-                                        </div>
+                                        </section>
                                     )
                                 }
                             )
                         }
 
 
-                    </div>
-                    : <p> "no post" </p>
+                    </article>
+                    : <p className="mx-auto max-w-3xl border-y border-stone-300 py-8 text-center text-lg uppercase tracking-[0.2em] text-stone-500">No post</p>
             }
         </div>
     )

@@ -64,6 +64,8 @@ label {
 }
 header {
     background: #f7f6f2;
+    border-bottom: 1px solid rgba(28, 25, 23, 0.7);
+    box-shadow: 0 1px 0 rgba(28, 25, 23, 0.35);
 }
 header .title a {
     font-family: 'Offenbacher', serif;
@@ -87,6 +89,75 @@ header:before{
     width: 1.55rem;
     height: 2px;
     background: #f7f6f2;
+}
+.magazine-card.card:after {
+    display: none;
+}
+
+.posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+
+.magazine-card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0));
+}
+
+.magazine-card-title,
+.article-title,
+.article-section h3 {
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.magazine-title-link {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0 2px;
+    transition: background-size 250ms ease;
+}
+
+.magazine-card:hover .magazine-title-link {
+    background-size: 100% 2px;
+}
+
+.magazine-read-link {
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 0.2rem;
+}
+
+.magazine-read-link:hover {
+    color: #991b1b;
+}
+
+.article-shell {
+    color: #1c1917;
+}
+
+.article-title {
+    font-family: 'News Cycle', serif;
+    font-weight: 700;
+}
+
+.article-body,
+.article-section {
+    font-size: 1.25rem;
+}
+
+.article-dropcap,
+.article-section-dropcap {
+    float: left;
+    margin: 0.1rem 0.65rem 0 0;
+    font-size: 5.5rem;
+    line-height: 0.82;
+    font-weight: 700;
+    color: #1c1917;
+}
+
+.article-section-dropcap {
+    font-size: 4.25rem;
 }
 
 /*.card:before{*/
@@ -191,59 +262,78 @@ input[type="file"]::file-selector-button:active {
 }
 /*================= menu ===============*/
 
+.menu-link {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+}
+
 .menu-link a {
-    font-family: 'Offenbacher', serif;
     display: block;
-    font-size: 24px;
+    border-right: 1px solid rgba(87, 83, 78, 0.45);
+    padding: 0.35rem 0.9rem;
+    color: #292524;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    line-height: 1;
+    text-transform: uppercase;
 }
-.btn-wrap{
-    padding: 10px 15px;
+
+.menu-link a:first-child {
+    padding-left: 0;
 }
+
+.menu-link a:last-child {
+    border-right: 0;
+}
+
 .hover-cut {
-    color: #333;
     position: relative;
-    width: max-content;
-    margin: 0 auto;
-    transform: skewX(0deg) translateX(0px);
-    cursor: pointer;
-    transition: 0.3s;
+    transition: color 200ms ease;
 }
-.hover-cut:hover {
-    /*transform: skewX(-15deg) translateX(18px);*/
-    color: #000;
-}
-.hover-cut::before {
+
+.hover-cut::after {
     content: "";
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translateY(-50%);
+    right: 0.9rem;
+    bottom: -0.35rem;
+    left: 0.9rem;
     height: 1px;
-    width: 0;
-    background: #fff;
-    overflow: hidden;
-    transition: 0.3s;
-    z-index: 1;
-    transform: rotate(5deg);
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms ease;
 }
-/*.hover-cut:hover::before {*/
-/*    width: 110%;*/
-/*    left: -5%;*/
-/*}*/
-.hover-cut::after {
-    content: attr(data-text);
-    position: absolute;
-    left: 0%;
-    top: 0;
-    height: 50%;
-    overflow: hidden;
-    transform: skewX(0deg);
-    background: #f7f6f2;
-    width: 110%;
-    transition: 0.3s;
-    color: #333;
+
+.menu-link a:first-child.hover-cut::after {
+    left: 0;
 }
+
+.hover-cut:hover {
+    color: #991b1b;
+}
+
 .hover-cut:hover::after {
-    /*transform: skewX(25deg) translateX(-15px);*/
-    color: red;
+    transform: scaleX(1);
+}
+
+@media (max-width: 767px) {
+    header .title a {
+        font-size: 46px;
+    }
+
+    .menu-link {
+        row-gap: 0.75rem;
+    }
+
+    .menu-link a {
+        padding: 0.25rem 0.65rem;
+        font-size: 0.68rem;
+    }
+
+    .article-title {
+        font-size: 3rem;
+    }
 }

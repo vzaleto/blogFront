@@ -15,10 +15,11 @@ type FullContentItem = {
     description: string;
 }
 
-const inputClass = "w-full rounded-md border border-stone-300 bg-stone-50 px-4 py-3 text-base text-stone-900 outline-none transition placeholder:text-stone-400 focus:border-amber-700 focus:bg-white focus:ring-2 focus:ring-amber-200";
-const buttonClass = "rounded-md bg-stone-950 px-5 py-3 text-base font-bold uppercase tracking-wide text-white shadow-sm transition hover:bg-amber-900 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2";
-const secondaryButtonClass = "rounded-md border border-stone-300 bg-white px-4 py-2 text-sm font-bold uppercase tracking-wide text-stone-800 transition hover:border-amber-700 hover:text-amber-900 focus:outline-none focus:ring-2 focus:ring-amber-200";
-const dangerButtonClass = "rounded-md border border-red-200 bg-red-50 px-4 py-2 text-sm font-bold uppercase tracking-wide text-red-700 transition hover:border-red-400 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-200";
+const inputClass = "w-full border border-stone-300 bg-[#f7f6f2] px-4 py-3 text-base text-stone-950 outline-none transition placeholder:text-stone-400 focus:border-stone-950 focus:bg-white focus:ring-1 focus:ring-stone-950";
+const labelClass = "mb-2 text-xs font-bold uppercase tracking-[0.2em] text-stone-500";
+const buttonClass = "border border-stone-950 bg-stone-950 px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] text-[#f7f6f2] transition hover:bg-transparent hover:text-stone-950 focus:outline-none focus:ring-1 focus:ring-stone-950";
+const secondaryButtonClass = "border border-stone-900 bg-transparent px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-stone-950 transition hover:bg-stone-950 hover:text-[#f7f6f2] focus:outline-none focus:ring-1 focus:ring-stone-950";
+const dangerButtonClass = "border border-red-800 bg-transparent px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-red-800 transition hover:bg-red-800 hover:text-[#f7f6f2] focus:outline-none focus:ring-1 focus:ring-red-800";
 
 const PostCreate = ({initialData}: {initialData?: Post}) => {
 
@@ -135,80 +136,86 @@ const PostCreate = ({initialData}: {initialData?: Post}) => {
 
     return (
         <div className="space-y-8">
-            <form onSubmit={handleSubmit} className="rounded-lg border border-stone-300 bg-white/80 p-5 shadow-sm">
-                <div className="mb-5 flex items-center justify-between gap-4 border-b border-stone-200 pb-3">
+            <form onSubmit={handleSubmit} className="border border-stone-300 bg-white/85 p-6 shadow-sm md:p-8">
+                <div className="mb-7 flex items-center justify-between gap-4 border-b border-stone-300 pb-4">
                     <div>
-                        <p className="text-xs font-bold uppercase tracking-[0.18em] text-stone-500">
+                        <p className="text-xs font-bold uppercase tracking-[0.22em] text-stone-500">
                             {initialData ? 'Edit post' : 'New post'}
                         </p>
-                        <h1 className="mt-1 text-xl font-bold uppercase text-stone-900">Post</h1>
+                        <h1 className="mt-1 text-2xl font-bold uppercase tracking-[0.08em] text-stone-950">Post</h1>
                     </div>
-                    <span className="rounded-full bg-amber-100 px-3 py-1 text-sm font-bold text-amber-900">
+                    <span className="border border-stone-900 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-stone-950">
                         {initialData ? 'Update' : 'Create'}
                     </span>
                 </div>
 
-                <div className="mb-5">
-                    <label className="mb-1 text-sm font-bold uppercase tracking-wide text-stone-600" htmlFor="title">Title</label>
+                <div className="mb-6">
+                    <label className={labelClass} htmlFor="title">Title</label>
                     <input type='text' value={inputTitle} placeholder='Post title'
                            className={inputClass}
                            id="title" onChange={(e) => setInputTitle(e.target.value)}/>
                 </div>
-                <div className="mb-5">
-                    <label className="mb-1 text-sm font-bold uppercase tracking-wide text-stone-600" htmlFor="content">Content</label>
+                <div className="mb-6">
+                    <label className={labelClass} htmlFor="content">Content</label>
                     <textarea value={inputContent} placeholder="Post introduction" className={`${inputClass} min-h-36 resize-y`} id="content" onChange={(e) => setInputContent(e.target.value)}></textarea>
                 </div>
-                <div className="mb-5">
-                    <label className="mb-1 text-sm font-bold uppercase tracking-wide text-stone-600" htmlFor="image">Image</label>
-                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                        <input type='file' className="text-base text-stone-700" id="image"
+                <div className="mb-6">
+                    <label className={labelClass} htmlFor="image">Image</label>
+                    <div className="border border-stone-300 bg-[#f7f6f2] p-4">
+                        <input type='file' className="text-sm text-stone-700" id="image"
                                onChange={(e) => setInputImage(e.target.files?.[0] || null)}/>
                         {
                             inputImage && (
-                                <img src={typeof inputImage === 'string' ? `http://localhost:3000/uploads/${inputImage}` : URL.createObjectURL(inputImage)}
-                                     className="h-28 w-40 rounded-md border border-stone-200 object-cover"/>
+                                <div className="mt-4 w-fit border border-stone-300 bg-white p-2">
+                                    <img src={typeof inputImage === 'string' ? `http://localhost:3000/uploads/${inputImage}` : URL.createObjectURL(inputImage)}
+                                         className="h-32 w-48 object-cover grayscale"/>
+                                    <p className="mt-2 text-xs font-bold uppercase tracking-[0.18em] text-stone-500">Hero preview</p>
+                                </div>
                             )
                         }
                     </div>
                 </div>
-                <div className="mb-5">
-                    <label className="mb-1 text-sm font-bold uppercase tracking-wide text-stone-600" htmlFor="tag">Tags</label>
+                <div className="mb-6">
+                    <label className={labelClass} htmlFor="tag">Tags</label>
                     <input type='text' value={inputTag} placeholder="Tags (comma separated)" id="tag"
                            className={inputClass}
                            onChange={(e) => setInputTag(e.target.value)}/>
                 </div>
                 <CategoryGetAll selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>
 
-                <div className="mb-5 rounded-lg border border-stone-300 bg-white/80 p-5 shadow-sm">
-                    <div className="mb-4 flex items-center justify-between gap-4">
+                <div className="mb-6 border border-stone-300 bg-white p-5">
+                    <div className="mb-5 flex items-center justify-between gap-4 border-b border-stone-300 pb-4">
                         <div>
-                            <p className="text-xs font-bold uppercase tracking-[0.18em] text-stone-500">Post body</p>
-                            <h3 className="mt-1 text-lg font-bold uppercase text-stone-900">Full content</h3>
+                            <p className="text-xs font-bold uppercase tracking-[0.22em] text-stone-500">Post body</p>
+                            <h3 className="mt-1 text-xl font-bold uppercase tracking-[0.08em] text-stone-950">Full content</h3>
                         </div>
-                        <span className="rounded-full bg-stone-100 px-3 py-1 text-sm font-bold text-stone-700">{fullContent.length}</span>
+                        <span className="border border-stone-300 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-stone-600">{fullContent.length}</span>
                     </div>
-                    <div className="mb-5">
-                        <label className="mb-1 text-sm font-bold uppercase tracking-wide text-stone-600" htmlFor="cardImage">Card image</label>
-                        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                            <input type="file" className="text-base text-stone-700"
+                    <div className="mb-6">
+                        <label className={labelClass} htmlFor="cardImage">Card image</label>
+                        <div className="border border-stone-300 bg-[#f7f6f2] p-4">
+                            <input type="file" className="text-sm text-stone-700"
                                    onChange={(e) => setNewCard({...newCard, image: e.target.files?.[0] || null})}
                                    name=""
                                    id="cardImage"/>
                             {newCard.image && (
-                                <img src={typeof newCard.image === 'string' ? `http://localhost:3000/uploads/${newCard.image}` :  URL.createObjectURL(newCard.image)}
-                                     className="h-28 w-40 rounded-md border border-stone-200 object-cover"/>
+                                <div className="mt-4 w-fit border border-stone-300 bg-white p-2">
+                                    <img src={typeof newCard.image === 'string' ? `http://localhost:3000/uploads/${newCard.image}` :  URL.createObjectURL(newCard.image)}
+                                         className="h-32 w-48 object-cover grayscale"/>
+                                    <p className="mt-2 text-xs font-bold uppercase tracking-[0.18em] text-stone-500">Section preview</p>
+                                </div>
                             )}
                         </div>
                     </div>
-                    <div className="mb-5">
-                        <label className="mb-1 text-sm font-bold uppercase tracking-wide text-stone-600" htmlFor="cardTitle">Card title</label>
+                    <div className="mb-6">
+                        <label className={labelClass} htmlFor="cardTitle">Card title</label>
                         <input type="text" value={newCard.title} placeholder="Title"
                                className={inputClass}
                                onChange={(e) => setNewCard({...newCard, title: e.target.value})} name=""
                                id="cardTitle"/>
                     </div>
-                    <div className="mb-5">
-                        <label className="mb-1 text-sm font-bold uppercase tracking-wide text-stone-600" htmlFor="cardDescription">Card description</label>
+                    <div className="mb-6">
+                        <label className={labelClass} htmlFor="cardDescription">Card description</label>
                         <textarea value={newCard.description} placeholder="Description" id="cardDescription" className={`${inputClass} min-h-32 resize-y`} onChange={(e) => setNewCard({...newCard, description: e.target.value})}></textarea>
                     </div>
                     <button type="button" className={`${buttonClass} w-full`} onClick={addCard}>
@@ -217,18 +224,18 @@ const PostCreate = ({initialData}: {initialData?: Post}) => {
                 </div>
 
                 {fullContent.length > 0 && (
-                    <div className="mb-5 space-y-3">
+                    <div className="mb-6 space-y-4">
                         {fullContent.map((item, index) => (
-                            <div key={index} className="rounded-lg border border-stone-200 bg-stone-50 p-4">
+                            <div key={index} className="border border-stone-300 bg-[#f7f6f2] p-4">
                                 <div className="flex flex-col gap-4 sm:flex-row">
                             {
                                 item.image && (
-                                            <img src={typeof item.image === 'string' ? `http://localhost:3000/uploads/${item.image}`  : URL.createObjectURL(item.image)} className="h-28 w-40 rounded-md border border-stone-200 object-cover"/>
+                                            <img src={typeof item.image === 'string' ? `http://localhost:3000/uploads/${item.image}`  : URL.createObjectURL(item.image)} className="h-32 w-48 border border-stone-300 bg-white object-cover p-1 grayscale"/>
                                 )
                             }
                                     <div className="min-w-0 flex-1">
-                                        <p className="text-base font-bold uppercase text-stone-900">{item.title}</p>
-                                        <p className="mt-2 text-base text-stone-600">{item.description}</p>
+                                        <p className="text-sm font-bold uppercase tracking-[0.14em] text-stone-950">{item.title}</p>
+                                        <p className="mt-2 text-base leading-7 text-stone-600">{item.description}</p>
                                     </div>
                         </div>
                                 <div className="mt-4 flex flex-wrap gap-2">

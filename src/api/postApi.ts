@@ -1,9 +1,6 @@
 import axios, {AxiosHeaders} from "axios";
-const API_URL = 'http://localhost:3000/api';
- //      const API_URL = `${import.meta.env.VITE_API_URL}/api`;
-
-// export const fetchPostsApi =  () => axios.get(`${API_URL}/posts`);
-// export const fetchPostByIdApi = (id:number) => axios.get(`${API_URL}/posts/${id}`;
+// const API_URL = 'http://localhost:3000/api';
+       const API_URL = `${import.meta.env.VITE_API_URL}/api`;
 
 export const apiClient = axios.create({
     baseURL:`${API_URL}`,
@@ -13,10 +10,6 @@ export const apiClient = axios.create({
 });
 export const apiClientCreatePost = axios.create({
     baseURL: `${API_URL}`,
-    // headers: {
-    //     "Content-type": "multipart/form-data",
-    //     Authorization: `Bearer ${localStorage.getItem("token")}`
-    // }
 })
 apiClientCreatePost.interceptors.request.use((config) => {
     const token = localStorage.getItem("token");

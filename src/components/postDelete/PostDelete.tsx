@@ -20,7 +20,7 @@ export const PostDelete: React.FC<PostDeleteProps> = ({elemId}) => {
     return (
         <div>
             <button type="button"
-                    className="rounded-md border border-red-200 bg-red-50 px-4 py-2 text-sm font-bold uppercase tracking-wide text-red-700 transition hover:border-red-400 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-red-200"
+                    className="border border-red-800 bg-transparent px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-red-800 transition hover:bg-red-800 hover:text-[#f7f6f2] focus:outline-none focus:ring-1 focus:ring-red-800"
                     onClick={handleDelete}>Delete
             </button>
         </div>

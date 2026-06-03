@@ -3,6 +3,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {createCategory, fetchCategories} from "../../features/categorySlice/categorySlice";
 import {AppDispatch, RootState} from "../../store/store.ts";
 
+const inputClass = "w-full border border-stone-300 bg-[#f7f6f2] px-4 py-3 text-base text-stone-950 outline-none transition placeholder:text-stone-400 focus:border-stone-950 focus:bg-white focus:ring-1 focus:ring-stone-950";
+const labelClass = "mb-2 text-xs font-bold uppercase tracking-[0.2em] text-stone-500";
+
 export const CategoryCreate = () => {
 
     const [name, setName] = useState('');
@@ -51,18 +54,18 @@ export const CategoryCreate = () => {
     }
 
     return (
-        <div className="mt-8 rounded-lg border border-stone-300 bg-white/80 p-5 shadow-sm">
-            <div className="mb-5 flex items-center justify-between gap-4 border-b border-stone-200 pb-3">
+        <div className="mt-8 border border-stone-300 bg-white/85 p-6 shadow-sm">
+            <div className="mb-6 flex items-center justify-between gap-4 border-b border-stone-300 pb-4">
                 <div>
-                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-stone-500">New category</p>
-                    <h1 className="mt-1 text-xl font-bold uppercase text-stone-900">Category</h1>
+                    <p className="text-xs font-bold uppercase tracking-[0.22em] text-stone-500">New category</p>
+                    <h1 className="mt-1 text-2xl font-bold uppercase tracking-[0.08em] text-stone-950">Category</h1>
                 </div>
-                <span className="rounded-full bg-amber-100 px-3 py-1 text-sm font-bold text-amber-900">Create</span>
+                <span className="border border-stone-900 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-stone-950">Create</span>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
-                    <label className="mb-1 text-sm font-bold uppercase tracking-wide text-stone-600" htmlFor="category-name">
+                    <label className={labelClass} htmlFor="category-name">
                         Name
                     </label>
                     <input
@@ -71,12 +74,12 @@ export const CategoryCreate = () => {
                         placeholder="Travel"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="w-full rounded-md border border-stone-300 bg-stone-50 px-4 py-3 text-base text-stone-900 outline-none transition placeholder:text-stone-400 focus:border-amber-700 focus:bg-white focus:ring-2 focus:ring-amber-200"
+                        className={inputClass}
                     />
                 </div>
 
                 <div>
-                    <label className="mb-1 text-sm font-bold uppercase tracking-wide text-stone-600" htmlFor="category-slug">
+                    <label className={labelClass} htmlFor="category-slug">
                         Slug
                     </label>
                     <input
@@ -85,12 +88,12 @@ export const CategoryCreate = () => {
                         placeholder="travel"
                         value={slug}
                         onChange={(e) => setSlug(e.target.value)}
-                        className="w-full rounded-md border border-stone-300 bg-stone-50 px-4 py-3 text-base text-stone-900 outline-none transition placeholder:text-stone-400 focus:border-amber-700 focus:bg-white focus:ring-2 focus:ring-amber-200"
+                        className={inputClass}
                     />
                 </div>
 
                 <div>
-                    <label className="mb-1 text-sm font-bold uppercase tracking-wide text-stone-600" htmlFor="category-description">
+                    <label className={labelClass} htmlFor="category-description">
                         Description
                     </label>
                     <input
@@ -99,24 +102,24 @@ export const CategoryCreate = () => {
                         placeholder="Short category description"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className="w-full rounded-md border border-stone-300 bg-stone-50 px-4 py-3 text-base text-stone-900 outline-none transition placeholder:text-stone-400 focus:border-amber-700 focus:bg-white focus:ring-2 focus:ring-amber-200"
+                        className={inputClass}
                     />
                 </div>
 
                 <button
                     type="submit"
-                    className="w-full rounded-md bg-stone-950 px-5 py-3 text-base font-bold uppercase tracking-wide text-white shadow-sm transition hover:bg-amber-900 focus:outline-none focus:ring-2 focus:ring-amber-300 focus:ring-offset-2"
+                    className="w-full border border-stone-950 bg-stone-950 px-5 py-3 text-xs font-bold uppercase tracking-[0.18em] text-[#f7f6f2] transition hover:bg-transparent hover:text-stone-950 focus:outline-none focus:ring-1 focus:ring-stone-950"
                 >
                     Create category
                 </button>
 
                 {success && (
-                    <p className="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm font-bold text-green-700">
+                    <p className="border border-green-700 bg-transparent px-4 py-3 text-sm font-bold uppercase tracking-[0.12em] text-green-700">
                         Category created successfully
                     </p>
                 )}
                 {error && (
-                    <p className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm font-bold text-red-700">
+                    <p className="border border-red-800 bg-transparent px-4 py-3 text-sm font-bold uppercase tracking-[0.12em] text-red-800">
                         {error}
                     </p>
                 )}

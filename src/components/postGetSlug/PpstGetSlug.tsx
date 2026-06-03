@@ -2,12 +2,12 @@ import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchPostSlug} from "../../features/postSlise/postSlice.ts";
 import {useEffect} from "react";
-import {RootState} from "../../store/store.ts";
+import {AppDispatch, RootState} from "../../store/store.ts";
 import PostCard from "../postCard/PostCard.tsx";
 
 export const PostGetSlug = ()=>{
     const {slug} = useParams();
-    const dispatch = useDispatch();
+    const dispatch:AppDispatch = useDispatch();
      const {posts} = useSelector((state: RootState) => state.posts);
 
     console.log("slug",slug)

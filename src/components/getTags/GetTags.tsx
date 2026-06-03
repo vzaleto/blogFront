@@ -17,19 +17,19 @@ const dispatch:AppDispatch = useDispatch();
 
 
     return (
-        <div className="flex flex-wrap gap-2 mb-6">
+        <div className="mb-8 flex flex-wrap items-center gap-x-3 gap-y-2 border-y border-stone-300 py-3">
             {tags.length ? (
                 tags.map((tag) => (
                     <Link
                         key={tag.id}
                         to={`/tag/${tag.name}`}
-                        className="px-3 py-1 text-sm rounded-full border border-gray-300 hover:bg-cyan-500 hover:text-white transition"
+                        className="text-xs font-bold uppercase tracking-[0.18em] text-stone-500 transition hover:text-red-800"
                     >
                         #{tag.name}
                     </Link>
                 ))
             ) : (
-                <p>no tags</p>
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-stone-500">no tags</p>
             )}
         </div>
     );

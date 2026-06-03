@@ -18,15 +18,15 @@ const SearchBar = () => {
     }
 
     return (
-        <form onSubmit={handleSearch} className="flex rounded-3xl border border-black">
+        <form onSubmit={handleSearch} className="flex border border-stone-900 bg-[#f7f6f2]">
             <input
                 type="text"
                 value={searchQuery}
                 placeholder="Search..."
                 onChange={(e)=>setSearchQuery(e.target.value)}
-                className="px-4 py-2 rounded-l-3xl border-none border-gray-300 focus:outline-none text-base placeholder:text-gray-400 text-black"
+                className="min-w-0 bg-transparent px-3 py-2 text-sm uppercase tracking-[0.12em] text-stone-950 placeholder:text-stone-500 focus:outline-none"
             />
-            <button type='submit' className="px-4 py-2 bg-black text-white  rounded-r-3xl hover:bg-stone-700 transition border-none text-base">
+            <button type='submit' className="border-l border-stone-900 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-stone-950 transition hover:bg-stone-950 hover:text-[#f7f6f2]">
                 Search
             </button>
         </form>

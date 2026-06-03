@@ -28,12 +28,12 @@ const PostsGetAll = () => {
 
 
     return (
-        <div>
+        <div className="posts-list">
             <GetTags/>
             {
                 posts && posts.length ?
-                    posts.map((elem) => (
-                        <PostCard key={elem.id} elem={elem}/>
+                    posts.map((elem, index) => (
+                        <PostCard key={elem.id} elem={elem} featured={index === 0}/>
                     )) : <p>"no posts"</p>
             }
         </div>
