@@ -5,6 +5,8 @@ import {fetchPosts, fetchPostsSearch, resetPosts, setFiltered} from "../../featu
 import GetTags from "../getTags/GetTags.tsx";
 import PostCard from "../postCard/PostCard.tsx";
 import {useSearchParams} from 'react-router-dom';
+import {Link} from "react-router-dom";
+import {Tag} from "../../Types/types.ts";
 
 const PostsGetAll = () => {
 
@@ -12,6 +14,10 @@ const PostsGetAll = () => {
     const dispatch: AppDispatch = useDispatch();
     const [searchParams] = useSearchParams()
     const searchQuery = searchParams.get('query')?.trim() || '';
+    const currentMonth = new Intl.DateTimeFormat('en', {month: 'long'}).format(new Date());
+    const leadPost = posts?.[0];
+    const secondaryPosts = posts?.slice(1, 3) || [];
+    const listPosts = posts?.slice(3) || [];
 
     useEffect(() => {
 
@@ -31,10 +37,67 @@ const PostsGetAll = () => {
         <div className="posts-list">
             <GetTags/>
             {
-                posts && posts.length ?
-                    posts.map((elem, index) => (
-                        <PostCard key={elem.id} elem={elem} featured={index === 0}/>
-                    )) : <p>"no posts"</p>
+                leadPost ? (
+                    <>
+                        <section className="front-page-lead" aria-label="Lead story">
+                            <Link to={`/post/${leadPost.id}`} className="front-page-lead-image">
+                                <img
+                                    src={`${import.meta.env.VITE_API_URL}/uploads/${leadPost.image}`}
+                                    alt={leadPost.title}
+                                />
+                            </Link>
+
+                            <div className="front-page-lead-copy">
+                                <div className="front-page-label">
+                                    <span>Lead Story</span>
+                                    <span aria-hidden="true">/</span>
+                                    <span>{currentMonth}</span>
+                                </div>
+
+                                <h2 className="front-page-lead-title">
+                                    <Link to={`/post/${leadPost.id}`} className="magazine-title-link">
+                                        {leadPost.title}
+                                    </Link>
+                                </h2>
+
+                                <p className="front-page-lead-excerpt">
+                                    {leadPost.content}
+                                </p>
+
+                                <div className="front-page-lead-footer">
+                                    <div className="front-page-lead-tags">
+                                        {
+                                            leadPost.tags && leadPost.tags.length ?
+                                                leadPost.tags.map((tag: Tag) => (
+                                                    <span key={tag.id}>{tag.name}</span>
+                                                )) : <span>No tags</span>
+                                        }
+                                    </div>
+
+                                    <Link to={`/post/${leadPost.id}`} className="magazine-read-link front-page-read-link">
+                                        Read lead story
+                                    </Link>
+                                </div>
+                            </div>
+                        </section>
+
+                        {
+                            secondaryPosts.length ? (
+                                <section className="front-page-secondary max-w-5xl mx-auto" aria-label="Secondary stories">
+                                    {secondaryPosts.map((elem) => (
+                                        <PostCard key={elem.id} elem={elem} variant="teaser"/>
+                                    ))}
+                                </section>
+                            ) : null
+                        }
+
+                        {
+                            listPosts.map((elem) => (
+                                <PostCard key={elem.id} elem={elem} />
+                            ))
+                        }
+                    </>
+                ) : <p>"no posts"</p>
             }
         </div>
     );

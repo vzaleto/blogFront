@@ -9,18 +9,50 @@ import {ButtonEdit} from "../ButtonEdit/ButtonEdit.tsx";
  export interface PostCardProps {
     elem: Post;
     featured?: boolean;
+    variant?: 'default' | 'teaser';
 }
 
-const PostCard: FC<PostCardProps> = ({elem, featured = false}) => {
+const PostCard: FC<PostCardProps> = ({elem, featured = false, variant = 'default'}) => {
 
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     const publishedDate = elem.createdAt ? new Date(elem.createdAt).toLocaleDateString() : 'Undated';
     const readingTime = `${Math.max(1, Math.ceil((elem.content || '').split(/\s+/).length / 180))} min read`;
 
+    if (variant === 'teaser') {
+        return (
+            <article className="front-page-teaser group ">
+                <Link to={`/post/${elem.id}`} className="front-page-teaser-image">
+                    <img
+                        src={`${import.meta.env.VITE_API_URL}/uploads/${elem.image}`}
+                        alt={elem.title}
+                    />
+                </Link>
+
+                <div className="front-page-teaser-body">
+                    <div className="front-page-teaser-meta">
+                        <span>Brief</span>
+                        <span className="h-px w-5 bg-stone-400" aria-hidden="true"></span>
+                        <time dateTime={elem.createdAt}>{publishedDate}</time>
+                    </div>
+
+                    <h3 className="front-page-teaser-title">
+                        <Link to={`/post/${elem.id}`} className="magazine-title-link">
+                            {elem.title}
+                        </Link>
+                    </h3>
+
+                    <p className="front-page-teaser-copy">
+                        {elem.content}
+                    </p>
+                </div>
+            </article>
+        );
+    }
+
     return (
         <article
             key={elem.id}
-            className={`card magazine-card group relative border-y border-stone-900/70 py-7 transition duration-300 hover:border-stone-950 ${
+            className={`card magazine-card group relative border-y max-w-5xl mx-auto border-stone-900/70 py-7 transition duration-300 hover:border-stone-950  ${
                 featured ? 'featured-card md:py-10' : ''
             }`}
         >
