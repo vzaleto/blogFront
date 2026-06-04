@@ -2,8 +2,8 @@ import {FormEvent, useState} from 'react';
 
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../store/store.ts";
-
 import {adminLoginPassword, logout} from "../../features/adminSlice/adminSlice.ts";
+import {useNavigate} from "react-router-dom";
 
 const AdminLog = () => {
 
@@ -11,6 +11,7 @@ const AdminLog = () => {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const dispatch: AppDispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -18,12 +19,16 @@ const AdminLog = () => {
         setUsername('');
         setPassword("");
     }
+    const handleLogout = () => {
+        dispatch(logout());
+        navigate('/');
+    }
 
     console.log("token",token);
     return (
         isAuth ? (
            <div>
-               <button onClick={() => dispatch(logout())} className="block w-28 border border-stone-950 bg-stone-950 px-4 py-2 text-center text-xs font-bold uppercase tracking-[0.18em] text-[#f7f6f2] transition hover:bg-transparent hover:text-stone-950" >logout</button>
+               <button onClick={() => dispatch(handleLogout)} className="block w-28 border border-stone-950 bg-stone-950 px-4 py-2 text-center text-xs font-bold uppercase tracking-[0.18em] text-[#f7f6f2] transition hover:bg-transparent hover:text-stone-950" >logout</button>
            </div>
         ):(
             <form onSubmit={handleSubmit} className="flex flex-wrap items-center gap-2 border border-stone-300 bg-white/85 p-2">

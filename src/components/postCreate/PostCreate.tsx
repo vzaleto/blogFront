@@ -1,8 +1,8 @@
-import {useDispatch, useSelector} from "react-redux";
-import {AppDispatch, RootState} from "../../store/store.ts";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "../../store/store.ts";
 import {FormEvent, useEffect, useState} from "react";
 
-import {useNavigate} from "react-router-dom";
+
 import {createPost, fetchPostUpdate} from "../../features/postSlise/postSlice.ts";
 import {CategoryCreate} from "../categoryCreate/CategoryCreate.tsx";
 import {CategoryGetAll} from "../categoryGetAll/CategoryGetAll.tsx";
@@ -23,7 +23,6 @@ const dangerButtonClass = "border border-red-800 bg-transparent px-4 py-2 text-x
 
 const PostCreate = ({initialData}: {initialData?: Post}) => {
 
-    const {token} = useSelector((state: RootState) => state.auth);
 
     const [selectedCategory, setSelectedCategory] = useState<number | "">("");
     const [inputTitle, setInputTitle] = useState<string>('');
@@ -38,14 +37,13 @@ const PostCreate = ({initialData}: {initialData?: Post}) => {
         title: '',
         description: ''
     });
-    const navigate = useNavigate();
     const dispatch: AppDispatch = useDispatch();
 
-    useEffect(() => {
-        if (!token) {
-            navigate('/')
-        }
-    }, [token, navigate]);
+    // useEffect(() => {
+    //     if (!token) {
+    //         navigate('/')
+    //     }
+    // }, [token, navigate]);
 
     useEffect(() => {
         if (initialData) {
