@@ -71,7 +71,7 @@ header .title a {
     font-weight: 400;
     font-size: 65px;
 }
-header:before{
+.header-menu:before{
     content: "";
     position: absolute;
     bottom: 4px;

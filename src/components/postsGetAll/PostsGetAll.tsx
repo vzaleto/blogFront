@@ -7,6 +7,8 @@ import PostCard from "../postCard/PostCard.tsx";
 import {useSearchParams} from 'react-router-dom';
 import {Link} from "react-router-dom";
 import {Tag} from "../../Types/types.ts";
+import {PostDelete} from "../postDelete/PostDelete.tsx";
+import {ButtonEdit} from "../ButtonEdit/ButtonEdit.tsx";
 
 const PostsGetAll = () => {
 
@@ -18,6 +20,7 @@ const PostsGetAll = () => {
     const leadPost = posts?.[0];
     const secondaryPosts = posts?.slice(1, 3) || [];
     const listPosts = posts?.slice(3) || [];
+    const isAuth = useSelector((state: RootState) => state.auth.isAuth);
 
     useEffect(() => {
 
@@ -73,17 +76,28 @@ const PostsGetAll = () => {
                                                 )) : <span>No tags</span>
                                         }
                                     </div>
-
-                                    <Link to={`/post/${leadPost.id}`} className="magazine-read-link front-page-read-link">
-                                        Read lead story
-                                    </Link>
+                                    <div className="flex flex-col gap-3 sm:items-end">
+                                        <Link to={`/post/${leadPost.id}`}
+                                              className="magazine-read-link front-page-read-link">
+                                            Read lead story
+                                        </Link>
+                                        {
+                                            isAuth && leadPost.id ? (
+                                                <div className="flex flex-wrap gap-2">
+                                                    <PostDelete elemId={leadPost.id}/>
+                                                    <ButtonEdit id={leadPost.id}/>
+                                                </div>
+                                            ) : null
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </section>
 
                         {
                             secondaryPosts.length ? (
-                                <section className="front-page-secondary max-w-5xl mx-auto" aria-label="Secondary stories">
+                                <section className="front-page-secondary max-w-5xl mx-auto"
+                                         aria-label="Secondary stories">
                                     {secondaryPosts.map((elem) => (
                                         <PostCard key={elem.id} elem={elem} variant="teaser"/>
                                     ))}
@@ -93,7 +107,7 @@ const PostsGetAll = () => {
 
                         {
                             listPosts.map((elem) => (
-                                <PostCard key={elem.id} elem={elem} />
+                                <PostCard key={elem.id} elem={elem}/>
                             ))
                         }
                     </>

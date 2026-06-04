@@ -6,7 +6,7 @@ import {useSelector} from "react-redux";
 import {RootState} from "../../store/store.ts";
 import {ButtonEdit} from "../ButtonEdit/ButtonEdit.tsx";
 
- export interface PostCardProps {
+export interface PostCardProps {
     elem: Post;
     featured?: boolean;
     variant?: 'default' | 'teaser';
@@ -44,6 +44,16 @@ const PostCard: FC<PostCardProps> = ({elem, featured = false, variant = 'default
                     <p className="front-page-teaser-copy">
                         {elem.content}
                     </p>
+                    <div className="flex flex-wrap gap-2">
+                        {
+                            isAuth && elem.id ? (
+                                <div className="flex flex-wrap gap-2">
+                                    <PostDelete elemId={elem.id}/>
+                                    <ButtonEdit id={elem.id}/>
+                                </div>
+                            ) : null
+                        }
+                    </div>
                 </div>
             </article>
         );
@@ -56,7 +66,8 @@ const PostCard: FC<PostCardProps> = ({elem, featured = false, variant = 'default
                 featured ? 'featured-card md:py-10' : ''
             }`}
         >
-            <div className={`grid gap-6 md:items-stretch ${featured ? 'md:grid-cols-[1.05fr_1fr]' : 'md:grid-cols-[40%_1fr]'}`}>
+            <div
+                className={`grid gap-6 md:items-stretch ${featured ? 'md:grid-cols-[1.05fr_1fr]' : 'md:grid-cols-[40%_1fr]'}`}>
                 <Link to={`/post/${elem.id}`} className="block overflow-hidden bg-stone-200">
                     <img
                         src={`${import.meta.env.VITE_API_URL}/uploads/${elem.image}`}
@@ -69,7 +80,8 @@ const PostCard: FC<PostCardProps> = ({elem, featured = false, variant = 'default
 
                 <div className="flex min-w-0 flex-col justify-between border-stone-300 md:border-l md:pl-7">
                     <div>
-                        <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.72rem] font-bold uppercase tracking-[0.2em] text-stone-500">
+                        <div
+                            className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.72rem] font-bold uppercase tracking-[0.2em] text-stone-500">
                             <span>Story</span>
                             <span className="h-px w-6 bg-stone-400" aria-hidden="true"></span>
                             <time dateTime={elem.createdAt}>{publishedDate}</time>
@@ -96,7 +108,8 @@ const PostCard: FC<PostCardProps> = ({elem, featured = false, variant = 'default
                     </div>
 
                     <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                        <div className="flex flex-wrap gap-x-3 gap-y-2 text-[0.72rem] font-bold uppercase tracking-[0.18em] text-stone-500">
+                        <div
+                            className="flex flex-wrap gap-x-3 gap-y-2 text-[0.72rem] font-bold uppercase tracking-[0.18em] text-stone-500">
                             {
                                 elem.tags && elem.tags.length ?
                                     elem.tags.map((tag: Tag) => (

@@ -8,7 +8,7 @@ const Home = () => {
 
     return (
         <div className="min-h-screen">
-            <header className="max-w-screen-2xl mx-auto sticky top-0 pb-4  pt-4 border-amber-950 z-50 after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-gradient-to-r after:from-transparent after:via-[#5e5e5e] after:to-transparent">
+            <header className="header-menu max-w-screen-2xl mx-auto sticky top-0 pb-4  pt-4 border-amber-950 z-50 after:absolute after:bottom-0 after:left-0 after:w-full after:h-[2px] after:bg-gradient-to-r after:from-transparent after:via-[#5e5e5e] after:to-transparent">
                 <div className="">
                     <div className="">
                         <div className=" flex flex-row justify-end gap-4">
