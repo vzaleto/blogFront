@@ -44,15 +44,35 @@ const PostCard: FC<PostCardProps> = ({elem, featured = false, variant = 'default
                     <p className="front-page-teaser-copy">
                         {elem.content}
                     </p>
-                    <div className="flex flex-wrap gap-2">
-                        {
-                            isAuth && elem.id ? (
-                                <div className="flex flex-wrap gap-2">
-                                    <PostDelete elemId={elem.id}/>
-                                    <ButtonEdit id={elem.id}/>
-                                </div>
-                            ) : null
-                        }
+                    <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                        <div
+                            className="flex flex-wrap gap-x-3 gap-y-2 text-[0.72rem] font-bold uppercase tracking-[0.18em] text-stone-500">
+                            {
+                                elem.tags && elem.tags.length ?
+                                    elem.tags.map((tag: Tag) => (
+                                        <span key={tag.id}>{tag.name}</span>
+                                    )) : <span>No tags</span>
+                            }
+                        </div>
+
+                        <div className="flex flex-col gap-3 sm:items-end">
+                            <Link
+                                to={`/post/${elem.id}`}
+                                type="button"
+                                className="magazine-read-link inline-flex w-max text-sm font-bold uppercase tracking-[0.2em] text-stone-950 transition"
+                            >
+                                Read story
+                            </Link>
+
+                            {
+                                isAuth && elem.id ? (
+                                    <div className="flex flex-wrap gap-2">
+                                        <PostDelete elemId={elem.id}/>
+                                        <ButtonEdit id={elem.id}/>
+                                    </div>
+                                ) : null
+                            }
+                        </div>
                     </div>
                 </div>
             </article>
